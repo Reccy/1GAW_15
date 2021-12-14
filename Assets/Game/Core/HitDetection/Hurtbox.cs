@@ -10,6 +10,17 @@ public class Hurtbox : MonoBehaviour
     public delegate void OnHitEvent(Hitbox h);
     public OnHitEvent OnHit;
 
+    private HitDetectionGroup m_group;
+    public HitDetectionGroup Group => m_group;
+
+    [SerializeField] private bool m_intergroupCollisions = false;
+    public bool IntergroupCollisions => m_intergroupCollisions;
+
+    private void Awake()
+    {
+        m_group = GetComponentInParent<HitDetectionGroup>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag(HITBOX))
@@ -23,8 +34,15 @@ public class Hurtbox : MonoBehaviour
             return;
         }
 
-        hitbox.OnHit(this);
+        // If an intergroup collision occurs, ensure both boxes have intergroup collision enabled
+        if (IsIntergroupCollision(hitbox) && !IntergroupCollisionEnabled(hitbox))
+            return;
 
+        hitbox.OnHit(this);
         OnHit?.Invoke(hitbox);
     }
+
+    private bool IsIntergroupCollision(Hitbox hitbox) => hitbox.Group == Group;
+
+    private bool IntergroupCollisionEnabled(Hitbox hitbox) => hitbox.IntergroupCollisions && m_intergroupCollisions;
 }

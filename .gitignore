@@ -83,3 +83,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Gg]izmos.meta
 /[Aa]ssets/[Aa]star[Pp]athfinding[Pp]roject/*
 /[Aa]ssets/[Aa]star[Pp]athfinding[Pp]roject.meta
+/[Aa]ssets/[Pp]lugins/*
+/[Aa]ssets/[Pp]lugins.meta

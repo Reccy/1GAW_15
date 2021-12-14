@@ -11,6 +11,11 @@ public class PlayerBrain : MonoBehaviour
 
     private MouseCursorWorldPosition m_mousePos;
 
+    #region INPUT
+    private bool m_inputLeftStrike = false;
+    private bool m_inputRightStrike = false;
+    #endregion
+
     private void Awake()
     {
         m_rp = ReInput.players.GetPlayer(PLAYER_ID);
@@ -24,5 +29,26 @@ public class PlayerBrain : MonoBehaviour
 
         m_char.Move(move);
         m_char.LookAt(m_mousePos.transform.position, -90);
+
+        if (m_inputLeftStrike)
+        {
+            m_char.PunchLeft();
+            m_inputLeftStrike = false;
+        }
+
+        if (m_inputRightStrike)
+        {
+            m_char.PunchRight();
+            m_inputRightStrike = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (!m_inputLeftStrike)
+            m_inputLeftStrike = m_rp.GetButtonDown("LeftStrike");
+
+        if (!m_inputRightStrike)
+            m_inputRightStrike = m_rp.GetButtonDown("RightStrike");
     }
 }
