@@ -22,8 +22,14 @@ public class Fist : MonoBehaviour
     private Vector3 m_windupPosition;
     private Hitbox m_hitbox;
 
-    private bool m_isAttacking = false;
-    public bool IsAttacking => m_isAttacking;
+    private enum FistState { IDLE, WINDUP, STRIKE, MISS, COOLDOWN };
+    private FistState State = FistState.IDLE;
+
+    public bool IsIdle => State == FistState.IDLE;
+    public bool IsWindup => State == FistState.WINDUP;
+    public bool IsStrike => State == FistState.STRIKE;
+    public bool IsMiss => State == FistState.MISS;
+    public bool IsCooldown => State == FistState.COOLDOWN;
 
     private void Awake()
     {
@@ -32,53 +38,86 @@ public class Fist : MonoBehaviour
         m_windupPosition = m_windupTransform.position;
 
         m_hitbox = GetComponentInChildren<Hitbox>();
-        m_hitbox.OnHurt += HandleOnHurt;
-
-        m_hitbox.gameObject.SetActive(false);
+        m_hitbox.OnHurt += OnFistAttackLanded;
     }
 
-    private void HandleOnHurt(Hurtbox hurtbox)
+    private void Idle()
     {
-        if (!IsAttacking)
-            return;
+        MoveToState(FistState.IDLE);
 
-        m_currentSequence.Kill();
-        OnStrikeComplete();
-
-        m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOLocalMove(m_restingPosition, m_recoveryTime, false));
-        m_currentSequence.AppendCallback(() => { OnRecoveryComplete(); });
-        m_currentSequence.Play();
+        SetHitboxActive(false);
     }
 
     // Returns true if attack triggered, false otherwise
-    public bool Attack()
+    public void WindUp()
     {
-        if (IsAttacking)
-            return false;
+        if (!IsIdle)
+            return;
 
-        m_isAttacking = true;
-        m_hitbox.gameObject.SetActive(true);
+        MoveToState(FistState.WINDUP);
 
         m_currentSequence = DOTween.Sequence();
         m_currentSequence.Append(transform.DOLocalMove(m_windupPosition, m_windupTime, false));
-        m_currentSequence.Append(transform.DOLocalMove(m_targetPosition, m_attackTime, false));
-        m_currentSequence.AppendCallback(() => { OnStrikeComplete(); });
-        m_currentSequence.AppendInterval(m_missPenaltyTime);
-        m_currentSequence.Append(transform.DOLocalMove(m_restingPosition, m_recoveryTime, false));
-        m_currentSequence.AppendCallback(() => { OnRecoveryComplete(); });
         m_currentSequence.Play();
-
-        return true;
     }
 
-    private void OnStrikeComplete()
+    public void Strike()
     {
-        m_hitbox.gameObject.SetActive(false);
+        if (!IsWindup)
+            return;
+
+        MoveToState(FistState.STRIKE);
+
+        SetHitboxActive(true);
+
+        m_currentSequence = DOTween.Sequence();
+        m_currentSequence.Append(transform.DOLocalMove(m_targetPosition, m_attackTime, false));
+        // Can get interrupted here by OnFistAttackLanded which will move immediately to Cooldown();
+        m_currentSequence.AppendCallback(() => { Miss(); });
     }
 
-    private void OnRecoveryComplete()
+    private void Miss()
     {
-        m_isAttacking = false;
+        MoveToState(FistState.MISS);
+
+        SetHitboxActive(false);
+
+        m_currentSequence = DOTween.Sequence();
+        m_currentSequence.AppendInterval(m_missPenaltyTime);
+        m_currentSequence.AppendCallback(() => { Cooldown(); });
+        m_currentSequence.Play();
+    }
+
+    private void Cooldown()
+    {
+        MoveToState(FistState.COOLDOWN);
+
+        SetHitboxActive(false);
+
+        m_currentSequence = DOTween.Sequence();
+        m_currentSequence.Append(transform.DOLocalMove(m_restingPosition, m_recoveryTime, false));
+        m_currentSequence.AppendCallback(() => { Idle(); });
+        m_currentSequence.Play();
+    }
+
+    private void SetHitboxActive(bool active)
+    {
+        m_hitbox.gameObject.SetActive(active);
+    }
+
+    private void MoveToState(FistState newState)
+    {
+        State = newState;
+
+        if (m_currentSequence != null)
+            m_currentSequence.Kill();
+    }
+
+    private void OnFistAttackLanded(Hurtbox hurtbox)
+    {
+        if (!IsStrike)
+            return;
+
+        Cooldown();
     }
 }

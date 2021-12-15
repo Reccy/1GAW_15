@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
     private Character m_closestCharacter;
     public Character ClosestCharacter => m_closestCharacter;
 
-    private bool IsAttacking => m_leftFist.IsAttacking || m_rightFist.IsAttacking;
+    private bool IsAttacking => !m_leftFist.IsIdle || !m_rightFist.IsIdle;
 
     private Rigidbody2D m_rb;
 
@@ -53,13 +53,23 @@ public class Character : MonoBehaviour
         m_rb.rotation += lookOffsetDegrees;
     }
 
-    public void PunchLeft()
+    public void WindUpLeftStrike()
     {
-        m_leftFist.Attack();
+        m_leftFist.WindUp();
     }
 
-    public void PunchRight()
+    public void WindUpRightStrike()
     {
-        m_rightFist.Attack();
+        m_rightFist.WindUp();
+    }
+
+    public void ReleaseLeftStrike()
+    {
+        m_leftFist.Strike();
+    }
+
+    public void ReleaseRightStrike()
+    {
+        m_rightFist.Strike();
     }
 }

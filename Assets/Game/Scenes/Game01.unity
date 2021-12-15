@@ -1084,8 +1084,8 @@ MonoBehaviour:
   MutualizeWaitingPools: 1
   PoolCanExpand: 1
   Lifetime: {x: 1, y: 1}
-  SpawnOffsetMin: {x: 0, y: 0, z: 0}
-  SpawnOffsetMax: {x: 0, y: 0, z: 0}
+  SpawnOffsetMin: {x: 0, y: 0, z: -5}
+  SpawnOffsetMax: {x: 0, y: 0, z: -5}
   AnimateMovement: 1
   AnimateX: 0
   RemapXZero: {x: 0, y: 0}
