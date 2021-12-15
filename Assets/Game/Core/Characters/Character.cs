@@ -15,9 +15,8 @@ public class Character : MonoBehaviour
     [SerializeField] private Fist m_leftFist;
     [SerializeField] private Fist m_rightFist;
 
-    // TODO: Focus punches on character in front
-    private Character m_closestCharacter;
-    public Character ClosestCharacter => m_closestCharacter;
+    public Fist LeftFist => m_leftFist;
+    public Fist RightFist => m_rightFist;
 
     private bool IsAttacking => !m_leftFist.IsIdle || !m_rightFist.IsIdle;
 
@@ -31,7 +30,7 @@ public class Character : MonoBehaviour
 
     private void HandleOnHit(Hitbox hitbox)
     {
-        Debug.Log($"You've been hit by {hitbox.gameObject.name}");
+        // TODO
     }
 
     public void Move(Vector3 movement)

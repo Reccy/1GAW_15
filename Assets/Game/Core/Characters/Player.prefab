@@ -557,6 +557,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 8647563655986435169}
     m_Modifications:
     - target: {fileID: 1287273124109974308, guid: cb07d8641526987429f2ed911d7af537, type: 3}
+      propertyPath: m_debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1287273124109974308, guid: cb07d8641526987429f2ed911d7af537, type: 3}
       propertyPath: m_targetTransform
       value: 
       objectReference: {fileID: 5259190029079150953}
@@ -564,6 +568,18 @@ PrefabInstance:
       propertyPath: m_windupTransform
       value: 
       objectReference: {fileID: 4100072637068446847}
+    - target: {fileID: 1768779153689492935, guid: cb07d8641526987429f2ed911d7af537, type: 3}
+      propertyPath: m_ignoreList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768779153689492935, guid: cb07d8641526987429f2ed911d7af537, type: 3}
+      propertyPath: m_ignoreList.Array.data[0]
+      value: 
+      objectReference: {fileID: 6371180447543306574}
+    - target: {fileID: 4424059956853180490, guid: cb07d8641526987429f2ed911d7af537, type: 3}
+      propertyPath: m_Name
+      value: Rigidbody2DFinder
+      objectReference: {fileID: 0}
     - target: {fileID: 7986690098061810966, guid: cb07d8641526987429f2ed911d7af537, type: 3}
       propertyPath: m_Name
       value: LeftFist
@@ -645,6 +661,14 @@ PrefabInstance:
       propertyPath: m_windupTransform
       value: 
       objectReference: {fileID: 3963469059447636215}
+    - target: {fileID: 1768779153689492935, guid: cb07d8641526987429f2ed911d7af537, type: 3}
+      propertyPath: m_ignoreList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768779153689492935, guid: cb07d8641526987429f2ed911d7af537, type: 3}
+      propertyPath: m_ignoreList.Array.data[0]
+      value: 
+      objectReference: {fileID: 6371180447543306574}
     - target: {fileID: 7986690098061810966, guid: cb07d8641526987429f2ed911d7af537, type: 3}
       propertyPath: m_Name
       value: RightFist

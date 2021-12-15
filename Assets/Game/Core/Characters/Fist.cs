@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using Reccy.ScriptExtensions;
+using Reccy.DebugExtensions;
 
 public class Fist : MonoBehaviour
 {
@@ -25,10 +27,12 @@ public class Fist : MonoBehaviour
 
     Sequence m_currentSequence;
 
-    private Vector3 m_targetPosition;
+    private Vector3 m_defaultTargetPosition;
+    private Vector3 m_currentTargetPosition;
     private Vector3 m_restingPosition;
     private Vector3 m_windupPosition;
     private Hitbox m_hitbox;
+    private Rigidbody2DFinder m_rbFinder;
 
     private enum FistState { IDLE, WINDUP, STRIKE, MISS, COOLDOWN };
     private FistState State = FistState.IDLE;
@@ -41,12 +45,16 @@ public class Fist : MonoBehaviour
 
     private void Awake()
     {
-        m_targetPosition = m_targetTransform.position;
+        m_defaultTargetPosition = m_targetTransform.position;
         m_restingPosition = transform.position;
         m_windupPosition = m_windupTransform.position;
 
         m_hitbox = GetComponentInChildren<Hitbox>();
         m_hitbox.OnHurt += OnFistAttackLanded;
+
+        m_rbFinder = GetComponentInChildren<Rigidbody2DFinder>();
+
+        Idle();
     }
 
     private void Idle()
@@ -81,7 +89,7 @@ public class Fist : MonoBehaviour
         SetHitboxActive(true);
 
         m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOLocalMove(m_targetPosition, m_attackTime, false));
+        m_currentSequence.Append(transform.DOLocalMove(m_defaultTargetPosition, m_attackTime, false));
         // Can get interrupted here by OnFistAttackLanded which will move immediately to Cooldown();
         m_currentSequence.AppendCallback(() => { Miss(); });
 
@@ -136,5 +144,32 @@ public class Fist : MonoBehaviour
 
         m_strikeLandedFeedbacks.PlayFeedbacks();
         Cooldown();
+    }
+
+    private void FixedUpdate()
+    {
+        if (m_rbFinder.AttachedRigidbodies.IsEmpty())
+        {
+            m_currentTargetPosition = transform.parent.TransformPoint(m_defaultTargetPosition);
+        }
+        else
+        {
+            m_currentTargetPosition = m_rbFinder.AttachedRigidbodies[0].ClosestPoint(transform.position);
+        }
+    }
+
+    [SerializeField] private bool m_debug = false;
+
+    private void Update()
+    {
+        if (m_debug)
+        {
+            foreach (var rb in m_rbFinder.AttachedRigidbodies)
+            {
+                Debug.Log(rb.gameObject);
+            }
+
+            Debug2.DrawCross(m_currentTargetPosition, Color.green);
+        }
     }
 }
