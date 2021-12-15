@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MoreMountains.Feedbacks;
 
 public class Fist : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class Fist : MonoBehaviour
     [SerializeField, Range(0.01f, 1.0f)] private float m_attackTime = 0.05f;
     [SerializeField, Range(0.01f, 1.0f)] private float m_missPenaltyTime = 0.05f;
     [SerializeField, Range(0.01f, 1.0f)] private float m_recoveryTime = 0.2f;
+
+    [Header("Juice")]
+    [SerializeField] private MMFeedbacks m_windupFeedbacks;
+    [SerializeField] private MMFeedbacks m_strikeFeedbacks;
+    [SerializeField] private MMFeedbacks m_strikeLandedFeedbacks;
+    [SerializeField] private MMFeedbacks m_missFeedbacks;
+    [SerializeField] private MMFeedbacks m_cooldownFeedbacks;
 
     Sequence m_currentSequence;
 
@@ -59,6 +67,8 @@ public class Fist : MonoBehaviour
         m_currentSequence = DOTween.Sequence();
         m_currentSequence.Append(transform.DOLocalMove(m_windupPosition, m_windupTime, false));
         m_currentSequence.Play();
+
+        m_windupFeedbacks.PlayFeedbacks();
     }
 
     public void Strike()
@@ -74,6 +84,8 @@ public class Fist : MonoBehaviour
         m_currentSequence.Append(transform.DOLocalMove(m_targetPosition, m_attackTime, false));
         // Can get interrupted here by OnFistAttackLanded which will move immediately to Cooldown();
         m_currentSequence.AppendCallback(() => { Miss(); });
+
+        m_strikeFeedbacks.PlayFeedbacks();
     }
 
     private void Miss()
@@ -86,6 +98,8 @@ public class Fist : MonoBehaviour
         m_currentSequence.AppendInterval(m_missPenaltyTime);
         m_currentSequence.AppendCallback(() => { Cooldown(); });
         m_currentSequence.Play();
+
+        m_missFeedbacks.PlayFeedbacks();
     }
 
     private void Cooldown()
@@ -98,6 +112,8 @@ public class Fist : MonoBehaviour
         m_currentSequence.Append(transform.DOLocalMove(m_restingPosition, m_recoveryTime, false));
         m_currentSequence.AppendCallback(() => { Idle(); });
         m_currentSequence.Play();
+
+        m_cooldownFeedbacks.PlayFeedbacks();
     }
 
     private void SetHitboxActive(bool active)
@@ -118,6 +134,7 @@ public class Fist : MonoBehaviour
         if (!IsStrike)
             return;
 
+        m_strikeLandedFeedbacks.PlayFeedbacks();
         Cooldown();
     }
 }

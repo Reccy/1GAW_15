@@ -176,7 +176,8 @@ GameObject:
   - component: {fileID: 4442394173620829967}
   - component: {fileID: 608809484783362160}
   - component: {fileID: 8686962123551438160}
-  - component: {fileID: 608809484783362158}
+  - component: {fileID: 2821975845322530535}
+  - component: {fileID: 8505098937895666636}
   m_Layer: 0
   m_Name: Dummy
   m_TagString: Untagged
@@ -280,7 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Feedbacks:
-  - {fileID: 608809484783362158}
+  - {fileID: 2821975845322530535}
+  - {fileID: 8505098937895666636}
   InitializationMode: 2
   SafeMode: 3
   Direction: 0
@@ -324,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5faf42db29f26842a36d69de45f09f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &608809484783362158
+--- !u!114 &2821975845322530535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,11 +335,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1697745266681829621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78862ef1b0224f54ca210438008ce671, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: Floating Text
+  Label: Sound
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -359,45 +361,70 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Channel: 0
-  Intensity: 1
-  Value: 100
-  UseIntensityAsValue: 0
-  ForceColor: 0
-  AnimateColorGradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  ForceLifetime: 0
-  Lifetime: 0.5
-  PositionMode: 1
-  TargetTransform: {fileID: 0}
-  Direction: {x: 0, y: 0, z: 0}
+  Sfx: {fileID: 0}
+  RandomSfx:
+  - {fileID: 8300000, guid: 883133fffbfc825499eb9c4b2ed56a0d, type: 3}
+  - {fileID: 8300000, guid: 9e44953b7c3080d478b9e242a67ab9c0, type: 3}
+  - {fileID: 8300000, guid: 365a9af404d6b914294286970243326f, type: 3}
+  - {fileID: 8300000, guid: afce792d0e1e3a841ab2f4ae603db0a1, type: 3}
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 0
+  PoolSize: 10
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &8505098937895666636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697745266681829621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Sfx: {fileID: 0}
+  RandomSfx:
+  - {fileID: 8300000, guid: 97c86957807b10448aab19c7220ebb1c, type: 3}
+  - {fileID: 8300000, guid: 45fcd9b2bab7ed249b009ed4aa98ac0f, type: 3}
+  - {fileID: 8300000, guid: 3f26b77d23cf53d4785f8351f8dcc870, type: 3}
+  TestButton: 0
+  TestStopButton: 0
+  PlayMethod: 0
+  PoolSize: 10
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 0.98
+  MaxPitch: 1.1
+  SfxAudioMixerGroup: {fileID: 0}
 --- !u!1 &1697745266686332415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,14 +1053,14 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 864908691278310831, guid: 0d4873960fb09fd4e8581da64bb9f720, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d4873960fb09fd4e8581da64bb9f720, type: 3}
---- !u!1 &1985911016166094381 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 864908691278310829, guid: 0d4873960fb09fd4e8581da64bb9f720, type: 3}
-  m_PrefabInstance: {fileID: 1697745267573906304}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1985911016166094385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 864908691278310833, guid: 0d4873960fb09fd4e8581da64bb9f720, type: 3}
+  m_PrefabInstance: {fileID: 1697745267573906304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1985911016166094381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 864908691278310829, guid: 0d4873960fb09fd4e8581da64bb9f720, type: 3}
   m_PrefabInstance: {fileID: 1697745267573906304}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1985911016166094380 stripped
