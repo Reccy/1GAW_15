@@ -27,15 +27,15 @@ public class Fist : MonoBehaviour
 
     Sequence m_currentSequence;
 
-    private Vector3 m_defaultTargetPosition;
-    private Vector3 m_currentTargetPosition;
-    private Vector3 m_restingPosition;
-    private Vector3 m_windupPosition;
+    private Vector3 m_defaultTargetPositionL;
+    private Vector3 m_currentTargetPositionL;
+    private Vector3 m_restingPositionL;
+    private Vector3 m_windupPositionL;
     private Hitbox m_hitbox;
     private Rigidbody2DFinder m_rbFinder;
 
-    private Vector3 RestingWorldPosition => transform.TransformPoint(m_restingPosition);
-    private Vector3 RestingDefaultTargetPosition => transform.TransformPoint(m_defaultTargetPosition);
+    private Vector3 RestingPositionW => transform.TransformPoint(m_restingPositionL);
+    private Vector3 DefaultTargetPositionW => transform.TransformPoint(m_defaultTargetPositionL);
 
     private enum FistState { IDLE, WINDUP, STRIKE, MISS, COOLDOWN };
     private FistState State = FistState.IDLE;
@@ -48,9 +48,9 @@ public class Fist : MonoBehaviour
 
     private void Awake()
     {
-        m_defaultTargetPosition = m_targetTransform.position;
-        m_restingPosition = transform.position;
-        m_windupPosition = m_windupTransform.position;
+        m_defaultTargetPositionL = m_targetTransform.localPosition;
+        m_restingPositionL = transform.localPosition;
+        m_windupPositionL = m_windupTransform.localPosition;
 
         m_hitbox = GetComponentInChildren<Hitbox>();
         m_hitbox.OnHurt += OnFistAttackLanded;
@@ -80,7 +80,7 @@ public class Fist : MonoBehaviour
         MoveToState(FistState.WINDUP);
 
         m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOLocalMove(m_windupPosition, m_windupTime, false));
+        m_currentSequence.Append(transform.DOLocalMove(m_windupPositionL, m_windupTime, false));
         m_currentSequence.Play();
 
         m_windupFeedbacks.PlayFeedbacks();
@@ -96,7 +96,7 @@ public class Fist : MonoBehaviour
         SetHitboxActive(true);
 
         m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOMove(m_currentTargetPosition, m_attackTime, false));
+        m_currentSequence.Append(transform.DOMove(m_currentTargetPositionL, m_attackTime, false));
         // Can get interrupted here by OnFistAttackLanded which will move immediately to Cooldown();
         m_currentSequence.AppendCallback(() => { Miss(); });
 
@@ -124,7 +124,7 @@ public class Fist : MonoBehaviour
         SetHitboxActive(false);
 
         m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOLocalMove(m_restingPosition, m_recoveryTime, false));
+        m_currentSequence.Append(transform.DOLocalMove(m_restingPositionL, m_recoveryTime, false));
         m_currentSequence.AppendCallback(() => { Idle(); });
         m_currentSequence.Play();
 
@@ -157,16 +157,16 @@ public class Fist : MonoBehaviour
     {
         if (m_rbFinder.AttachedRigidbodies.IsEmpty())
         {
-            m_currentTargetPosition = transform.parent.TransformPoint(m_defaultTargetPosition);
+            m_currentTargetPositionL = transform.parent.TransformPoint(m_defaultTargetPositionL);
         }
         else
         {
             var closestRb = m_rbFinder.AttachedRigidbodies.ClosestToZero((rb) => {
-                return Vector3.Distance(rb.transform.position, RestingWorldPosition);
+                return Vector3.Distance(rb.transform.position, RestingPositionW);
             });
 
-            var closestPointOnOther = closestRb.ClosestPoint(RestingDefaultTargetPosition);
-            m_currentTargetPosition = m_rbFinder.ClosestPointInCollider(closestPointOnOther);
+            var closestPointOnOther = closestRb.ClosestPoint(DefaultTargetPositionW);
+            m_currentTargetPositionL = m_rbFinder.ClosestPointInCollider(closestPointOnOther);
         }
     }
 
@@ -182,7 +182,7 @@ public class Fist : MonoBehaviour
     {
         if (m_debug)
         {
-            Debug2.DrawCross(m_currentTargetPosition, Color.green);
+            Debug2.DrawCross(m_currentTargetPositionL, Color.green);
         }
     }
 }

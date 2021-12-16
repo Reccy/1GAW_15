@@ -25,7 +25,7 @@ public class PlayerBrain : MonoBehaviour
     private void Awake()
     {
         m_rp = ReInput.players.GetPlayer(PLAYER_ID);
-        m_char = GetComponent<Character>();
+        m_char = GetComponentInChildren<Character>();
         m_mousePos = FindObjectOfType<MouseCursorWorldPosition>();
     }
 

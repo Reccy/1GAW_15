@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Hurtbox m_hurtbox;
     [SerializeField] private MMFeedbacks m_onHitFeedbacks;
+    [SerializeField] private MMFeedbacks m_onDieFeedbacks;
 
     [Header("Character Stats")]
     [SerializeField] private int m_hpMax = 10;
@@ -21,6 +22,10 @@ public class Character : MonoBehaviour
     public int HPCurrent => m_hpCurrent;
     public int StaminaMax => m_staminaMax;
     public int StaminaCurrent => m_staminaCurrent;
+
+    private bool m_isAlive = true;
+    public bool IsAlive => m_isAlive;
+    public bool IsDead => !m_isAlive;
 
     [Header("Movement Tuning")]
     [SerializeField] private float m_movementMult = 3.0f;
@@ -69,11 +74,20 @@ public class Character : MonoBehaviour
 
         // TODO: Update HP system to actually have variable damage
         m_hpCurrent--;
+
+        if (m_hpCurrent <= 0 && IsAlive)
+            Die();
+    }
+
+    private void Die()
+    {
+        m_onDieFeedbacks.PlayFeedbacks();
+        m_isAlive = false;
     }
 
     public void Move(Vector3 movement)
     {
-        if (IsBeingHitback)
+        if (IsBeingHitback || IsDead)
             return;
 
         movement = Vector3.ClampMagnitude(movement, 1);
@@ -88,6 +102,9 @@ public class Character : MonoBehaviour
 
     public void LookAt(Vector3 worldPosition, float lookOffsetDegrees = 0)
     {
+        if (IsBeingHitback || IsDead)
+            return;
+
         var direction = (worldPosition - transform.position).normalized;
         m_rb.SetRotation(Quaternion.LookRotation(direction, Vector3.forward));
         m_rb.rotation += lookOffsetDegrees;
@@ -95,21 +112,33 @@ public class Character : MonoBehaviour
 
     public void WindUpLeftStrike()
     {
+        if (IsDead)
+            return;
+
         m_leftFist.WindUp();
     }
 
     public void WindUpRightStrike()
     {
+        if (IsDead)
+            return;
+
         m_rightFist.WindUp();
     }
 
     public void ReleaseLeftStrike()
     {
+        if (IsDead)
+            return;
+
         m_leftFist.Strike();
     }
 
     public void ReleaseRightStrike()
     {
+        if (IsDead)
+            return;
+
         m_rightFist.Strike();
     }
 }
