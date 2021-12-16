@@ -263,6 +263,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_hurtbox: {fileID: 1985911016166094380}
+  m_onHitFeedbacks: {fileID: 608809484783362160}
+  m_hpMax: 10
+  m_staminaMax: 10
   m_movementMult: 3
   m_attackMovementPercent: 0.6
   m_leftFist: {fileID: 0}
