@@ -2591,7 +2591,7 @@ MonoBehaviour:
   m_hurtbox: {fileID: 8359407183578856123}
   m_onHitFeedbacks: {fileID: 7353235317634289235}
   m_onDieFeedbacks: {fileID: 1276399814382003934}
-  m_hpMax: 1
+  m_hpMax: 10
   m_staminaMax: 10
   m_movementMult: 5
   m_attackMovementPercent: 0.3
@@ -2612,7 +2612,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 20
-  m_AngularDrag: 1
+  m_AngularDrag: 15
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0

@@ -28,6 +28,9 @@ public class Rigidbody2DFinder : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.isTrigger)
+            return;
+
         var rb = collision.attachedRigidbody;
 
         if (!m_rigidbodies.Contains(rb) && !m_ignoreList.Contains(rb))
@@ -36,6 +39,9 @@ public class Rigidbody2DFinder : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.isTrigger)
+            return;
+
         var rb = collision.attachedRigidbody;
 
         if (m_rigidbodies.Contains(rb) && !m_ignoreList.Contains(rb))

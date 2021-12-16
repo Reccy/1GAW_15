@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using MoreMountains.Feedbacks;
 
 public class PlayerBrain : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerBrain : MonoBehaviour
     private Character m_char;
 
     private MouseCursorWorldPosition m_mousePos;
+
+    [Header("Feedbacks")]
+    [SerializeField] private MMFeedbacks m_attackLandedFeedbacks;
 
     #region INPUT
     private const string BTN_LEFT_STRIKE = "LeftStrike";
@@ -27,6 +31,9 @@ public class PlayerBrain : MonoBehaviour
         m_rp = ReInput.players.GetPlayer(PLAYER_ID);
         m_char = GetComponentInChildren<Character>();
         m_mousePos = FindObjectOfType<MouseCursorWorldPosition>();
+
+        m_char.LeftFist.OnAttackLanded += HandleOnAttackLanded;
+        m_char.RightFist.OnAttackLanded += HandleOnAttackLanded;
     }
 
     private void FixedUpdate()
@@ -76,5 +83,10 @@ public class PlayerBrain : MonoBehaviour
 
         if (!m_inputRightStrikeReleased)
             m_inputRightStrikeReleased = m_rp.GetButtonUp(BTN_RIGHT_STRIKE);
+    }
+
+    private void HandleOnAttackLanded()
+    {
+        m_attackLandedFeedbacks.PlayFeedbacks();
     }
 }

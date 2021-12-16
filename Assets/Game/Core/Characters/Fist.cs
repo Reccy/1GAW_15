@@ -46,6 +46,9 @@ public class Fist : MonoBehaviour
     public bool IsMiss => State == FistState.MISS;
     public bool IsCooldown => State == FistState.COOLDOWN;
 
+    public delegate void OnAttackLandedEvent();
+    public OnAttackLandedEvent OnAttackLanded;
+
     private void Awake()
     {
         m_defaultTargetPositionL = m_targetTransform.localPosition;
@@ -150,6 +153,9 @@ public class Fist : MonoBehaviour
             return;
 
         m_strikeLandedFeedbacks.PlayFeedbacks();
+
+        OnAttackLanded?.Invoke();
+
         Cooldown();
     }
 

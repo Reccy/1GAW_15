@@ -73,7 +73,9 @@ public class Character : MonoBehaviour
         m_hitbackTimeRemaining = m_hitbackTime;
 
         // TODO: Update HP system to actually have variable damage
-        m_hpCurrent--;
+        
+        if (m_hpCurrent > 0)
+            m_hpCurrent--;
 
         if (m_hpCurrent <= 0 && IsAlive)
             Die();
