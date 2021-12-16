@@ -34,6 +34,9 @@ public class Fist : MonoBehaviour
     private Hitbox m_hitbox;
     private Rigidbody2DFinder m_rbFinder;
 
+    private Vector3 RestingWorldPosition => transform.TransformPoint(m_restingPosition);
+    private Vector3 RestingDefaultTargetPosition => transform.TransformPoint(m_defaultTargetPosition);
+
     private enum FistState { IDLE, WINDUP, STRIKE, MISS, COOLDOWN };
     private FistState State = FistState.IDLE;
 
@@ -53,6 +56,10 @@ public class Fist : MonoBehaviour
         m_hitbox.OnHurt += OnFistAttackLanded;
 
         m_rbFinder = GetComponentInChildren<Rigidbody2DFinder>();
+        
+        // The reason we move the RB Finder to sibling is to prevent it from
+        // Moving when winding up a punch
+        m_rbFinder.gameObject.transform.parent = transform.parent;
 
         Idle();
     }
@@ -89,7 +96,7 @@ public class Fist : MonoBehaviour
         SetHitboxActive(true);
 
         m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOLocalMove(m_defaultTargetPosition, m_attackTime, false));
+        m_currentSequence.Append(transform.DOMove(m_currentTargetPosition, m_attackTime, false));
         // Can get interrupted here by OnFistAttackLanded which will move immediately to Cooldown();
         m_currentSequence.AppendCallback(() => { Miss(); });
 
@@ -154,8 +161,19 @@ public class Fist : MonoBehaviour
         }
         else
         {
-            m_currentTargetPosition = m_rbFinder.AttachedRigidbodies[0].ClosestPoint(transform.position);
+            var closestRb = m_rbFinder.AttachedRigidbodies.ClosestToZero((rb) => {
+                return Vector3.Distance(rb.transform.position, RestingWorldPosition);
+            });
+
+            var closestPointOnOther = closestRb.ClosestPoint(RestingDefaultTargetPosition);
+            m_currentTargetPosition = m_rbFinder.ClosestPointInCollider(closestPointOnOther);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Since RB Finder is a sibling, we clean it up here
+        Destroy(m_rbFinder.gameObject);
     }
 
     [SerializeField] private bool m_debug = false;
@@ -164,11 +182,6 @@ public class Fist : MonoBehaviour
     {
         if (m_debug)
         {
-            foreach (var rb in m_rbFinder.AttachedRigidbodies)
-            {
-                Debug.Log(rb.gameObject);
-            }
-
             Debug2.DrawCross(m_currentTargetPosition, Color.green);
         }
     }

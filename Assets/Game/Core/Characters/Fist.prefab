@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27131831afa28b499cb120fc9059997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Active: 1
+  Active: 0
   Label: Particles Play
   Chance: 100
   Timing:
@@ -5504,7 +5504,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetTransform: {fileID: 0}
   m_windupTransform: {fileID: 0}
-  m_targetAreaAngleDegrees: 33
   m_windupTime: 0.3
   m_attackTime: 0.1
   m_missPenaltyTime: 0.2
@@ -5683,6 +5682,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7986690098061810967}
     m_Modifications:
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
+      value: 3.00943
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
+      value: 3.0094304
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[5].x
+      value: -0.1137649
+      objectReference: {fileID: 0}
+    - target: {fileID: 813954491667900651, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[5].y
+      value: -0.11847317
+      objectReference: {fileID: 0}
     - target: {fileID: 3074168689045749642, guid: 98239e9fd51083d4ebc497d93c31189b, type: 3}
       propertyPath: m_Name
       value: Rigidbody2DFinder

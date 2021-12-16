@@ -36,7 +36,7 @@ public class PlayerBrain : MonoBehaviour
         m_char.Move(move);
         m_char.LookAt(m_mousePos.transform.position, -90);
 
-        // Wind up, check to ensure player can't punch both fists at same time using "IsStrikingRight/Left"
+        // Wind up
         if (m_inputLeftStrike)
         {
             m_char.WindUpLeftStrike();

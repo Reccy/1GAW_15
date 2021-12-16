@@ -10,8 +10,16 @@ public class Rigidbody2DFinder : MonoBehaviour
     [SerializeField] private List<Rigidbody2D> m_ignoreList;
     public IReadOnlyCollection<Rigidbody2D> IgnoreList => m_ignoreList.AsReadOnly();
 
+    private Rigidbody2D m_rb;
+
+    public Vector3 ClosestPointInCollider(Vector3 other)
+    {
+        return m_rb.ClosestPoint(other);
+    }
+
     private void Awake()
     {
+        m_rb = GetComponentInChildren<Rigidbody2D>();
         m_rigidbodies = new List<Rigidbody2D>();
 
         if (m_ignoreList == null)

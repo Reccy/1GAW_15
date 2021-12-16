@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4e2285f0f3a024fad58fe3cee7e8e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ignoreList: []
 --- !u!50 &4814632698263976516
 Rigidbody2D:
   serializedVersion: 4
@@ -91,8 +92,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
+    - - {x: -0.11376494, y: 0.1184732}
+      - {x: 3.00943, y: 1.5}
+      - {x: 3.0094304, y: -1.5}
+      - {x: -0.1137649, y: -0.11847317}
