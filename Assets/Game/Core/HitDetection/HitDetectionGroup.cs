@@ -2,7 +2,4 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitDetectionGroup : MonoBehaviour
-{
-
-}
+public class HitDetectionGroup : MonoBehaviour {}

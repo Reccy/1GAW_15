@@ -1563,6 +1563,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 844409270246578789, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2829769742800874185, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1607,9 +1611,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -36.706
       objectReference: {fileID: 0}
+    - target: {fileID: 3859654265086942044, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: clearBehavior
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5451386642312040759, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702867754767148217, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: m_staminaMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5751736945967866475, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046220470876673092, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: PositionMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}

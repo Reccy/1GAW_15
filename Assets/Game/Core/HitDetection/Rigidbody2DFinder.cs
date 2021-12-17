@@ -1,3 +1,4 @@
+using Reccy.ScriptExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,13 @@ public class Rigidbody2DFinder : MonoBehaviour
     public Vector3 ClosestPointInCollider(Vector3 other)
     {
         return m_rb.ClosestPoint(other);
+    }
+
+    public Rigidbody2D ClosestRigidbodyTo(Vector3 other)
+    {
+        return AttachedRigidbodies.ClosestToZero((rb) => {
+            return Vector3.Distance(rb.transform.position, other);
+        });
     }
 
     private void Awake()

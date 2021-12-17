@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Hurtbox m_hurtbox;
     [SerializeField] private MMFeedbacks m_onHitFeedbacks;
     [SerializeField] private MMFeedbacks m_onDieFeedbacks;
+    [SerializeField] private MMFeedbacks m_outOfStaminaFeedbacks;
 
     [Header("Character Stats")]
     [SerializeField] private int m_hpMax = 10;
@@ -26,6 +27,9 @@ public class Character : MonoBehaviour
     private bool m_isAlive = true;
     public bool IsAlive => m_isAlive;
     public bool IsDead => !m_isAlive;
+
+    public bool HasNoStamina => m_staminaCurrent <= 0;
+    public bool HasStamina => m_staminaCurrent > 0;
 
     [Header("Movement Tuning")]
     [SerializeField] private float m_movementMult = 3.0f;
@@ -53,12 +57,23 @@ public class Character : MonoBehaviour
 
         m_hpCurrent = m_hpMax;
         m_staminaCurrent = m_staminaMax;
+
+        m_leftFist.OnStrikeBegin += HandleOnStrikeBegin;
+        m_rightFist.OnStrikeBegin += HandleOnStrikeBegin;
     }
 
     private void FixedUpdate()
     {
         if (IsBeingHitback)
             m_hitbackTimeRemaining -= Time.deltaTime;
+    }
+
+    private void HandleOnStrikeBegin()
+    {
+        m_staminaCurrent--;
+
+        if (m_staminaCurrent < 0)
+            m_staminaCurrent = 0;
     }
 
     private void HandleOnHit(Hitbox hitbox)
@@ -96,7 +111,7 @@ public class Character : MonoBehaviour
 
         float movementPercent = 1.0f;
 
-        if (IsAttacking)
+        if (IsAttacking || HasNoStamina)
             movementPercent = m_attackMovementPercent;
 
         m_rb.AddForce(movement * m_movementMult * movementPercent, ForceMode2D.Impulse);
@@ -117,12 +132,18 @@ public class Character : MonoBehaviour
         if (IsDead)
             return;
 
+        if (CheckStaminaAndRunFeedbacks())
+            return;
+
         m_leftFist.WindUp();
     }
 
     public void WindUpRightStrike()
     {
         if (IsDead)
+            return;
+
+        if (CheckStaminaAndRunFeedbacks())
             return;
 
         m_rightFist.WindUp();
@@ -133,6 +154,9 @@ public class Character : MonoBehaviour
         if (IsDead)
             return;
 
+        if (CheckStaminaAndRunFeedbacks())
+            return;
+
         m_leftFist.Strike();
     }
 
@@ -141,6 +165,20 @@ public class Character : MonoBehaviour
         if (IsDead)
             return;
 
+        if (CheckStaminaAndRunFeedbacks())
+            return;
+
         m_rightFist.Strike();
+    }
+
+    private bool CheckStaminaAndRunFeedbacks()
+    {
+        if (m_staminaCurrent >= 1)
+            return false;
+
+        if (!m_outOfStaminaFeedbacks.IsPlaying)
+            m_outOfStaminaFeedbacks.PlayFeedbacks();
+
+        return true;
     }
 }

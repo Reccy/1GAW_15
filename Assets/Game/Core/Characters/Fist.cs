@@ -46,8 +46,11 @@ public class Fist : MonoBehaviour
     public bool IsMiss => State == FistState.MISS;
     public bool IsCooldown => State == FistState.COOLDOWN;
 
-    public delegate void OnAttackLandedEvent();
-    public OnAttackLandedEvent OnAttackLanded;
+    public delegate void OnStrikeBeginEvent();
+    public OnStrikeBeginEvent OnStrikeBegin;
+
+    public delegate void OnStrikeLandedEvent();
+    public OnStrikeLandedEvent OnStrikeLanded;
 
     private void Awake()
     {
@@ -104,6 +107,8 @@ public class Fist : MonoBehaviour
         m_currentSequence.AppendCallback(() => { Miss(); });
 
         m_strikeFeedbacks.PlayFeedbacks();
+
+        OnStrikeBegin?.Invoke();
     }
 
     private void Miss()
@@ -154,7 +159,7 @@ public class Fist : MonoBehaviour
 
         m_strikeLandedFeedbacks.PlayFeedbacks();
 
-        OnAttackLanded?.Invoke();
+        OnStrikeLanded?.Invoke();
 
         Cooldown();
     }
@@ -167,9 +172,7 @@ public class Fist : MonoBehaviour
         }
         else
         {
-            var closestRb = m_rbFinder.AttachedRigidbodies.ClosestToZero((rb) => {
-                return Vector3.Distance(rb.transform.position, RestingPositionW);
-            });
+            var closestRb = m_rbFinder.ClosestRigidbodyTo(RestingPositionW);
 
             var closestPointOnOther = closestRb.ClosestPoint(DefaultTargetPositionW);
             m_currentTargetPositionL = m_rbFinder.ClosestPointInCollider(closestPointOnOther);

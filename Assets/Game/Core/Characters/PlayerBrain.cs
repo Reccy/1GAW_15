@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 using MoreMountains.Feedbacks;
+using Reccy.ScriptExtensions;
 
 public class PlayerBrain : MonoBehaviour
 {
@@ -10,10 +11,14 @@ public class PlayerBrain : MonoBehaviour
     private Player m_rp;
     private Character m_char;
 
-    private MouseCursorWorldPosition m_mousePos;
+    private MouseCursorWorldPosition m_cursorPositionW;
 
     [Header("Feedbacks")]
     [SerializeField] private MMFeedbacks m_attackLandedFeedbacks;
+
+    [Header("Lockon")]
+    [SerializeField] private Rigidbody2DFinder m_lockonFinder;
+    [SerializeField] private bool m_lockonEnabled = true;
 
     #region INPUT
     private const string BTN_LEFT_STRIKE = "LeftStrike";
@@ -30,10 +35,10 @@ public class PlayerBrain : MonoBehaviour
     {
         m_rp = ReInput.players.GetPlayer(PLAYER_ID);
         m_char = GetComponentInChildren<Character>();
-        m_mousePos = FindObjectOfType<MouseCursorWorldPosition>();
+        m_cursorPositionW = FindObjectOfType<MouseCursorWorldPosition>();
 
-        m_char.LeftFist.OnAttackLanded += HandleOnAttackLanded;
-        m_char.RightFist.OnAttackLanded += HandleOnAttackLanded;
+        m_char.LeftFist.OnStrikeLanded += HandleOnAttackLanded;
+        m_char.RightFist.OnStrikeLanded += HandleOnAttackLanded;
     }
 
     private void FixedUpdate()
@@ -41,7 +46,9 @@ public class PlayerBrain : MonoBehaviour
         Vector3 move = m_rp.GetAxis2D("MoveHorizontal", "MoveVertical");
 
         m_char.Move(move);
-        m_char.LookAt(m_mousePos.transform.position, -90);
+
+        var lookTarget = CalculateLookTarget();
+        m_char.LookAt(lookTarget, -90);
 
         // Wind up
         if (m_inputLeftStrike)
@@ -88,5 +95,22 @@ public class PlayerBrain : MonoBehaviour
     private void HandleOnAttackLanded()
     {
         m_attackLandedFeedbacks.PlayFeedbacks();
+    }
+
+    private Vector3 CalculateLookTarget()
+    {
+        if (!m_lockonEnabled || m_lockonFinder.AttachedRigidbodies.IsEmpty())
+        {
+            return m_cursorPositionW.transform.position;
+        }
+
+        var rb = m_lockonFinder.ClosestRigidbodyTo(transform.position);
+
+        var character = rb.GetComponentInChildren<Character>();
+
+        if (character == null || character.IsDead)
+            return m_cursorPositionW.transform.position;
+
+        return character.transform.position;
     }
 }
