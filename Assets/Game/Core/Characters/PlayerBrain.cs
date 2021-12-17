@@ -23,12 +23,15 @@ public class PlayerBrain : MonoBehaviour
     #region INPUT
     private const string BTN_LEFT_STRIKE = "LeftStrike";
     private const string BTN_RIGHT_STRIKE = "RightStrike";
+    private const string BTN_DASH = "Dash";
 
     private bool m_inputLeftStrike = false;
     private bool m_inputLeftStrikeReleased = false;
 
     private bool m_inputRightStrike = false;
     private bool m_inputRightStrikeReleased = false;
+    
+    private bool m_inputDash = false;
     #endregion
 
     private void Awake()
@@ -46,6 +49,12 @@ public class PlayerBrain : MonoBehaviour
         Vector3 move = m_rp.GetAxis2D("MoveHorizontal", "MoveVertical");
 
         m_char.Move(move);
+
+        if (m_inputDash)
+        {
+            m_char.Dash(move);
+            m_inputDash = false;
+        }
 
         var lookTarget = CalculateLookTarget();
         m_char.LookAt(lookTarget, -90);
@@ -90,6 +99,9 @@ public class PlayerBrain : MonoBehaviour
 
         if (!m_inputRightStrikeReleased)
             m_inputRightStrikeReleased = m_rp.GetButtonUp(BTN_RIGHT_STRIKE);
+
+        if (!m_inputDash)
+            m_inputDash = m_rp.GetButtonDown(BTN_DASH);
     }
 
     private void HandleOnAttackLanded()

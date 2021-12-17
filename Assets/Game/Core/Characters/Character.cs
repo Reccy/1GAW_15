@@ -11,10 +11,13 @@ public class Character : MonoBehaviour
     [SerializeField] private MMFeedbacks m_onHitFeedbacks;
     [SerializeField] private MMFeedbacks m_onDieFeedbacks;
     [SerializeField] private MMFeedbacks m_outOfStaminaFeedbacks;
+    [SerializeField] private MMFeedbacks m_onFinalDieFeedbacks;
 
     [Header("Character Stats")]
     [SerializeField] private int m_hpMax = 10;
     [SerializeField] private int m_staminaMax = 10;
+    [SerializeField] private bool m_infiniteHp = false;
+    [SerializeField] private bool m_infiniteStam = false;
 
     private int m_hpCurrent;
     private int m_staminaCurrent;
@@ -47,8 +50,16 @@ public class Character : MonoBehaviour
 
     [Header("Combat Settings")]
     [SerializeField] private float m_hitbackTime = 0.2f;
-    private float m_hitbackTimeRemaining = 0.0f;
-    private bool IsBeingHitback => m_hitbackTimeRemaining > 0;
+    private Cooldown m_hitbackCooldown;
+
+    [Header("Dash Settings")]
+    [SerializeField] private float m_dashCooldownTime = 0.3f;
+    [SerializeField] private float m_dashForce = 50.0f;
+    private Cooldown m_dashCooldown;
+
+    [Header("Death Settings")]
+    [SerializeField] private float m_deathTime = 2.0f;
+    private Cooldown m_deathCooldown;
 
     private void Awake()
     {
@@ -60,16 +71,26 @@ public class Character : MonoBehaviour
 
         m_leftFist.OnStrikeBegin += HandleOnStrikeBegin;
         m_rightFist.OnStrikeBegin += HandleOnStrikeBegin;
+
+        m_hitbackCooldown = new Cooldown(m_hitbackTime);
+        m_dashCooldown = new Cooldown(m_dashCooldownTime);
+        m_deathCooldown = new Cooldown(m_deathTime);
+
+        m_deathCooldown.OnCooldownComplete += HandleDeathComplete;
     }
 
     private void FixedUpdate()
     {
-        if (IsBeingHitback)
-            m_hitbackTimeRemaining -= Time.deltaTime;
+        m_hitbackCooldown.Tick(Time.deltaTime);
+        m_dashCooldown.Tick(Time.deltaTime);
+        m_deathCooldown.Tick(Time.deltaTime);
     }
 
     private void HandleOnStrikeBegin()
     {
+        if (m_infiniteStam)
+            return;
+
         m_staminaCurrent--;
 
         if (m_staminaCurrent < 0)
@@ -78,17 +99,20 @@ public class Character : MonoBehaviour
 
     private void HandleOnHit(Hitbox hitbox)
     {
-        m_onHitFeedbacks.PlayFeedbacks();
+        m_onHitFeedbacks.PlayFeedbacks(); // TODO: Remaining HP Feedbacks
 
         var force = (transform.position - hitbox.transform.position).normalized * hitbox.AttackForce;
 
         // Do Hitback
         m_rb.velocity = Vector3.zero;
         m_rb.AddForce(force, ForceMode2D.Impulse);
-        m_hitbackTimeRemaining = m_hitbackTime;
+        m_hitbackCooldown.Begin();
 
         // TODO: Update HP system to actually have variable damage
-        
+
+        if (m_infiniteHp)
+            return;
+
         if (m_hpCurrent > 0)
             m_hpCurrent--;
 
@@ -100,11 +124,18 @@ public class Character : MonoBehaviour
     {
         m_onDieFeedbacks.PlayFeedbacks();
         m_isAlive = false;
+        m_deathCooldown.Begin();
+    }
+
+    private void HandleDeathComplete()
+    {
+        m_onFinalDieFeedbacks.PlayFeedbacks();
+        Destroy(gameObject);
     }
 
     public void Move(Vector3 movement)
     {
-        if (IsBeingHitback || IsDead)
+        if (m_hitbackCooldown.InProgress || IsDead)
             return;
 
         movement = Vector3.ClampMagnitude(movement, 1);
@@ -119,12 +150,24 @@ public class Character : MonoBehaviour
 
     public void LookAt(Vector3 worldPosition, float lookOffsetDegrees = 0)
     {
-        if (IsBeingHitback || IsDead)
+        if (m_hitbackCooldown.InProgress || IsDead)
             return;
 
         var direction = (worldPosition - transform.position).normalized;
         m_rb.SetRotation(Quaternion.LookRotation(direction, Vector3.forward));
         m_rb.rotation += lookOffsetDegrees;
+    }
+
+    public void Dash(Vector3 dashDirection)
+    {
+        dashDirection = dashDirection.normalized;
+
+        if (m_dashCooldown.InProgress) // TODO: Feedbacks
+            return;
+
+        m_rb.AddForce(dashDirection * m_dashForce, ForceMode2D.Impulse);
+
+        m_dashCooldown.Begin();
     }
 
     public void WindUpLeftStrike()
