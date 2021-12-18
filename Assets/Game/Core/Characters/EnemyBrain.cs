@@ -12,50 +12,69 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] private Rigidbody2DFinder m_ffZone;
 
     private bool m_punchLeft = false;
+    private bool m_canPunch = true;
+    private Cooldown m_punchCooldown;
 
     private void Awake()
     {
         m_char = GetComponentInChildren<Character>();
         m_char.OnHit += HandleOnHit;
+
+        m_punchCooldown = new Cooldown(0.3f);
     }
 
     private void Start()
     {
+        m_punchCooldown.Begin();
+        m_punchCooldown.OnCooldownComplete = () => { m_canPunch = true; };
+
         m_playerCharacter = FindObjectOfType<PlayerBrain>().Character;
     }
 
     private void FixedUpdate()
     {
+        m_punchCooldown.Tick(Time.deltaTime);
+
         // Do nothing if the player has died
         if (m_playerCharacter == null || m_playerCharacter.IsDead)
             return;
 
         var move = m_playerCharacter.transform.position - m_char.transform.position;
         
-        m_char.Move(move);
-        m_char.LookAt(m_playerCharacter.transform.position, -90);
-
-        if (IsInRangeOfPlayer() && PlayerIsInLineOfSight())
+        if (DistanceToPlayer < 5.0f && PlayerIsInLineOfSight())
         {
-            if (m_punchLeft)
+            if (m_canPunch)
             {
-                m_char.WindUpLeftStrike();
-                m_char.ReleaseLeftStrike();
-                m_punchLeft = false;
-            }
-            else
-            {
-                m_char.WindUpRightStrike();
-                m_char.ReleaseRightStrike();
-                m_punchLeft = true;
+                if (m_punchLeft)
+                {
+                    m_char.WindUpLeftStrike();
+                    m_char.ReleaseLeftStrike();
+                    m_punchLeft = false;
+                    m_canPunch = false;
+                    m_punchCooldown.Begin();
+                }
+                else
+                {
+                    m_char.WindUpRightStrike();
+                    m_char.ReleaseRightStrike();
+                    m_punchLeft = true;
+                    m_canPunch = false;
+                    m_punchCooldown.Begin();
+                }
             }
         }
+
+        if (DistanceToPlayer > 20.0f)
+        {
+            if (m_char.IsBlocking)
+                m_char.Unblock();
+        }
+
+        m_char.Move(move);
+        m_char.LookAt(m_playerCharacter.transform.position, -90);
     }
 
-    private bool IsInRangeOfPlayer()
-    {
-        return Vector3.Distance(m_playerCharacter.transform.position, m_char.transform.position) < m_inRangeAmount;
-    }
+    private float DistanceToPlayer => Vector3.Distance(m_playerCharacter.transform.position, m_char.transform.position);
 
     private void HandleOnHit()
     {
@@ -65,6 +84,9 @@ public class EnemyBrain : MonoBehaviour
     private bool PlayerIsInLineOfSight()
     {
         var closestRb = m_ffZone.ClosestRigidbodyTo(m_char.transform.position);
+
+        if (closestRb == null)
+            return false;
 
         var c = closestRb.GetComponentInParent<PlayerBrain>();
 
