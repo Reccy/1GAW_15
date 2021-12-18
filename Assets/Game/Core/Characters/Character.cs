@@ -55,11 +55,16 @@ public class Character : MonoBehaviour
 
     [Header("Combat Settings")]
     [SerializeField] private float m_hitbackTime = 0.2f;
-    [SerializeField] private int m_blockHitPenalty = 1;
     private Cooldown m_hitbackCooldown;
     private bool m_isBlocking = false;
 
     public bool IsBlocking => m_isBlocking;
+
+    [SerializeField] private float m_staminaCheckDelay = 2.0f;
+    [SerializeField] private float m_staminaRegenDelay = 0.25f;
+    private Cooldown m_staminaRegenCooldown;
+    private Cooldown m_staminaCheckCooldown;
+    private bool m_isRegenningStamina;
 
     [Header("Death Settings")]
     [SerializeField] private float m_deathTime = 2.0f;
@@ -80,12 +85,37 @@ public class Character : MonoBehaviour
         m_deathCooldown = new Cooldown(m_deathTime);
 
         m_deathCooldown.OnCooldownComplete += HandleDeathComplete;
+
+        m_staminaRegenCooldown = new Cooldown(m_staminaRegenDelay);
+        m_staminaRegenCooldown.OnCooldownComplete += HandleStaminaRegen;
+
+        m_staminaCheckCooldown = new Cooldown(m_staminaCheckDelay);
+        m_staminaCheckCooldown.OnCooldownComplete += BeginStaminaRegen;
+        m_staminaCheckCooldown.OnCooldownBegin += StopStaminaRegen;
     }
 
     private void FixedUpdate()
     {
         m_hitbackCooldown.Tick(Time.deltaTime);
         m_deathCooldown.Tick(Time.deltaTime);
+        m_staminaCheckCooldown.Tick(Time.deltaTime);
+
+        if (m_isBlocking)
+            m_staminaCheckCooldown.Begin();
+
+        if (m_isRegenningStamina)
+            m_staminaRegenCooldown.Tick(Time.deltaTime);
+    }
+
+    private void BeginStaminaRegen()
+    {
+        m_staminaRegenCooldown.Begin();
+        m_isRegenningStamina = true;
+    }
+
+    private void StopStaminaRegen()
+    {
+        m_isRegenningStamina = false;
     }
 
     private void HandleOnStrikeBegin()
@@ -144,6 +174,14 @@ public class Character : MonoBehaviour
         {
             BreakShield();
         }
+    }
+
+    private void HandleStaminaRegen()
+    {
+        m_staminaCurrent = Mathf.Min(m_staminaCurrent + 1, m_staminaMax);
+
+        if (m_staminaCurrent != m_staminaMax)
+            m_staminaRegenCooldown.Begin();
     }
 
     private void Die()
@@ -263,7 +301,10 @@ public class Character : MonoBehaviour
     private bool CheckStaminaAndRunFeedbacks()
     {
         if (m_staminaCurrent >= 1)
+        {
+            m_staminaCheckCooldown.Begin();
             return false;
+        }
 
         if (!m_outOfStaminaFeedbacks.IsPlaying)
             m_outOfStaminaFeedbacks.PlayFeedbacks();

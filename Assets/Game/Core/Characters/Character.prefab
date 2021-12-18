@@ -9572,7 +9572,8 @@ MonoBehaviour:
   m_leftFist: {fileID: 507056376242645119}
   m_rightFist: {fileID: 4858498413608931441}
   m_hitbackTime: 0.2
-  m_blockHitPenalty: 1
+  m_staminaCheckDelay: 2
+  m_staminaRegenDelay: 0.25
   m_deathTime: 2
 --- !u!50 &6371180447543306574
 Rigidbody2D:
