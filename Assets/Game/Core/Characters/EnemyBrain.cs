@@ -9,12 +9,14 @@ public class EnemyBrain : MonoBehaviour
     private Character m_playerCharacter;
 
     [SerializeField] private float m_inRangeAmount = 5.0f;
+    [SerializeField] private Rigidbody2DFinder m_ffZone;
 
     private bool m_punchLeft = false;
 
     private void Awake()
     {
         m_char = GetComponentInChildren<Character>();
+        m_char.OnHit += HandleOnHit;
     }
 
     private void Start()
@@ -33,8 +35,7 @@ public class EnemyBrain : MonoBehaviour
         m_char.Move(move);
         m_char.LookAt(m_playerCharacter.transform.position, -90);
 
-
-        if (IsInRangeOfPlayer())
+        if (IsInRangeOfPlayer() && PlayerIsInLineOfSight())
         {
             if (m_punchLeft)
             {
@@ -54,5 +55,19 @@ public class EnemyBrain : MonoBehaviour
     private bool IsInRangeOfPlayer()
     {
         return Vector3.Distance(m_playerCharacter.transform.position, m_char.transform.position) < m_inRangeAmount;
+    }
+
+    private void HandleOnHit()
+    {
+        m_char.Block();
+    }
+
+    private bool PlayerIsInLineOfSight()
+    {
+        var closestRb = m_ffZone.ClosestRigidbodyTo(m_char.transform.position);
+
+        var c = closestRb.GetComponentInParent<PlayerBrain>();
+
+        return c != null;
     }
 }

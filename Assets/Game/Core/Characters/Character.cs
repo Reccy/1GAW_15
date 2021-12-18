@@ -70,6 +70,10 @@ public class Character : MonoBehaviour
     [SerializeField] private float m_deathTime = 2.0f;
     private Cooldown m_deathCooldown;
 
+    // Events
+    public delegate void OnHitEvent();
+    public OnHitEvent OnHit;
+
     private void Awake()
     {
         m_hurtbox.OnHit += HandleOnHit;
@@ -137,6 +141,8 @@ public class Character : MonoBehaviour
         m_rb.velocity = Vector3.zero;
         m_rb.AddForce(force, ForceMode2D.Impulse);
         m_hitbackCooldown.Begin();
+
+        OnHit?.Invoke();
 
         if (IsBlocking)
         {
