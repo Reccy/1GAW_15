@@ -77,7 +77,6 @@ public class Fist : MonoBehaviour
         SetHitboxActive(false);
     }
 
-    // Returns true if attack triggered, false otherwise
     public void WindUp()
     {
         if (!IsIdle)
@@ -102,7 +101,7 @@ public class Fist : MonoBehaviour
         SetHitboxActive(true);
 
         m_currentSequence = DOTween.Sequence();
-        m_currentSequence.Append(transform.DOMove(m_currentTargetPositionL, m_attackTime, false));
+        m_currentSequence.Append(transform.DOLocalMove(m_currentTargetPositionL, m_attackTime, false));
         // Can get interrupted here by OnFistAttackLanded which will move immediately to Cooldown();
         m_currentSequence.AppendCallback(() => { Miss(); });
 
@@ -168,14 +167,14 @@ public class Fist : MonoBehaviour
     {
         if (m_rbFinder.AttachedRigidbodies.IsEmpty())
         {
-            m_currentTargetPositionL = transform.parent.TransformPoint(m_defaultTargetPositionL);
+            m_currentTargetPositionL = m_defaultTargetPositionL;
         }
         else
         {
             var closestRb = m_rbFinder.ClosestRigidbodyTo(RestingPositionW);
 
             var closestPointOnOther = closestRb.ClosestPoint(DefaultTargetPositionW);
-            m_currentTargetPositionL = m_rbFinder.ClosestPointInCollider(closestPointOnOther);
+            m_currentTargetPositionL = transform.InverseTransformPoint(m_rbFinder.ClosestPointInCollider(closestPointOnOther));
         }
     }
 
@@ -185,6 +184,7 @@ public class Fist : MonoBehaviour
         Destroy(m_rbFinder.gameObject);
     }
 
+    [Header("Debug")]
     [SerializeField] private bool m_debug = false;
 
     private void Update()

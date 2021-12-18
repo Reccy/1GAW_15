@@ -50,12 +50,6 @@ public class PlayerBrain : MonoBehaviour
 
         m_char.Move(move);
 
-        if (m_inputDash)
-        {
-            m_char.Dash(move);
-            m_inputDash = false;
-        }
-
         var lookTarget = CalculateLookTarget();
         m_char.LookAt(lookTarget, -90);
 

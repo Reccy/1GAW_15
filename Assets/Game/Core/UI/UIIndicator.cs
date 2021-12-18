@@ -7,9 +7,12 @@ public abstract class UIIndicator : MonoBehaviour
 {
     private TMP_Text m_text;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_text = GetComponent<TMP_Text>();
+
+        if (m_text == null)
+            Debug.LogError("TMP_Text could not be found!", this);
     }
 
     private void FixedUpdate()

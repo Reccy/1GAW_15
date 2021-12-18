@@ -52,11 +52,6 @@ public class Character : MonoBehaviour
     [SerializeField] private float m_hitbackTime = 0.2f;
     private Cooldown m_hitbackCooldown;
 
-    [Header("Dash Settings")]
-    [SerializeField] private float m_dashCooldownTime = 0.3f;
-    [SerializeField] private float m_dashForce = 50.0f;
-    private Cooldown m_dashCooldown;
-
     [Header("Death Settings")]
     [SerializeField] private float m_deathTime = 2.0f;
     private Cooldown m_deathCooldown;
@@ -73,7 +68,6 @@ public class Character : MonoBehaviour
         m_rightFist.OnStrikeBegin += HandleOnStrikeBegin;
 
         m_hitbackCooldown = new Cooldown(m_hitbackTime);
-        m_dashCooldown = new Cooldown(m_dashCooldownTime);
         m_deathCooldown = new Cooldown(m_deathTime);
 
         m_deathCooldown.OnCooldownComplete += HandleDeathComplete;
@@ -82,7 +76,6 @@ public class Character : MonoBehaviour
     private void FixedUpdate()
     {
         m_hitbackCooldown.Tick(Time.deltaTime);
-        m_dashCooldown.Tick(Time.deltaTime);
         m_deathCooldown.Tick(Time.deltaTime);
     }
 
@@ -155,18 +148,6 @@ public class Character : MonoBehaviour
         var direction = (worldPosition - transform.position).normalized;
         m_rb.SetRotation(Quaternion.LookRotation(direction, Vector3.forward));
         m_rb.rotation += lookOffsetDegrees;
-    }
-
-    public void Dash(Vector3 dashDirection)
-    {
-        dashDirection = dashDirection.normalized;
-
-        if (m_dashCooldown.InProgress) // TODO: Feedbacks
-            return;
-
-        m_rb.AddForce(dashDirection * m_dashForce, ForceMode2D.Impulse);
-
-        m_dashCooldown.Begin();
     }
 
     public void WindUpLeftStrike()
