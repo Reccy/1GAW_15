@@ -1,57 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Reccy.DebugExtensions;
 
 public class EnemyBrain : MonoBehaviour
 {
     private Character m_char;
+    private Character m_playerCharacter;
 
-    private Cooldown m_leftPunch;
-    private Cooldown m_rightPunch;
-    private Cooldown m_punchDelay;
+    [SerializeField] private float m_inRangeAmount = 5.0f;
+
+    private bool m_punchLeft = false;
 
     private void Awake()
     {
         m_char = GetComponentInChildren<Character>();
-
-        m_leftPunch = new Cooldown(0.3f);
-        m_rightPunch = new Cooldown(0.3f);
-        m_punchDelay = new Cooldown(0.15f);
-
-        m_punchDelay.OnCooldownComplete += BeginPunchRight;
-        m_leftPunch.OnCooldownComplete += PunchLeft;
-        m_rightPunch.OnCooldownComplete += PunchRight;
     }
 
     private void Start()
     {
-        m_leftPunch.Begin();
-        m_punchDelay.Begin();
+        m_playerCharacter = FindObjectOfType<PlayerBrain>().Character;
     }
 
     private void FixedUpdate()
     {
-        m_leftPunch.Tick(Time.deltaTime);
-        m_rightPunch.Tick(Time.deltaTime);
-        m_punchDelay.Tick(Time.deltaTime);
+        // Do nothing if the player has died
+        if (m_playerCharacter == null || m_playerCharacter.IsDead)
+            return;
+
+        var move = m_playerCharacter.transform.position - m_char.transform.position;
+        
+        m_char.Move(move);
+        m_char.LookAt(m_playerCharacter.transform.position, -90);
+
+
+        if (IsInRangeOfPlayer())
+        {
+            if (m_punchLeft)
+            {
+                m_char.WindUpLeftStrike();
+                m_char.ReleaseLeftStrike();
+                m_punchLeft = false;
+            }
+            else
+            {
+                m_char.WindUpRightStrike();
+                m_char.ReleaseRightStrike();
+                m_punchLeft = true;
+            }
+        }
     }
 
-    private void BeginPunchRight()
+    private bool IsInRangeOfPlayer()
     {
-        m_rightPunch.Begin();
-    }
-
-    private void PunchLeft()
-    {
-        m_char.WindUpLeftStrike();
-        m_char.ReleaseLeftStrike();
-        m_leftPunch.Begin();
-    }
-
-    private void PunchRight()
-    {
-        m_char.WindUpRightStrike();
-        m_char.ReleaseRightStrike();
-        m_rightPunch.Begin();
+        return Vector3.Distance(m_playerCharacter.transform.position, m_char.transform.position) < m_inRangeAmount;
     }
 }

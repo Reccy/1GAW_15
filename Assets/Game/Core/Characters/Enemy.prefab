@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a69cc0fd0096114f941832f9e932e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_inRangeAmount: 5
 --- !u!114 &5999582997506368448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +78,10 @@ PrefabInstance:
       propertyPath: m_staminaMax
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2333882200079891168, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: m_movementMult
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4352701357313145186, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: color.b
       value: 0.079476684
@@ -91,6 +96,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4858498413608931441, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5363262340781734047, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: Active
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180033362359807950, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: Active
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8647563655986435169, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}

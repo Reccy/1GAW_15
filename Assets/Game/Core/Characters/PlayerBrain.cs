@@ -10,6 +10,7 @@ public class PlayerBrain : MonoBehaviour
     private const int PLAYER_ID = 0;
     private Player m_rp;
     private Character m_char;
+    public Character Character => m_char;
 
     private MouseCursorWorldPosition m_cursorPositionW;
 
