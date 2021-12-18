@@ -130,7 +130,6 @@ public class Character : MonoBehaviour
     private void HandleDeathComplete()
     {
         m_onFinalDieFeedbacks.PlayFeedbacks();
-        Destroy(gameObject);
     }
 
     public void Move(Vector3 movement)
