@@ -39,6 +39,7 @@ public class Cooldown
 
     public bool Complete => m_timeRemaining <= 0;
     public bool InProgress => m_timeRemaining > 0;
+    public float TimeRemaining => m_timeRemaining;
 
     public delegate void OnCooldownUpdateEvent();
 
