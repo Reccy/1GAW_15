@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2333882200079891168, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_staminaMax
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2333882200079891168, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_infiniteStam

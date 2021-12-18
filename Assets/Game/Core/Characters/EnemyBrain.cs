@@ -15,6 +15,8 @@ public class EnemyBrain : MonoBehaviour
     private bool m_canPunch = true;
     private Cooldown m_punchCooldown;
 
+    private float m_timeSinceLastAttack = 0;
+
     private void Awake()
     {
         m_char = GetComponentInChildren<Character>();
@@ -34,14 +36,21 @@ public class EnemyBrain : MonoBehaviour
     private void FixedUpdate()
     {
         m_punchCooldown.Tick(Time.deltaTime);
+        m_timeSinceLastAttack += Time.deltaTime;
 
         // Do nothing if the player has died
         if (m_playerCharacter == null || m_playerCharacter.IsDead)
             return;
 
         var move = m_playerCharacter.transform.position - m_char.transform.position;
+
+        if (m_timeSinceLastAttack > 5.0f && m_char.StaminaCurrent >= (m_char.StaminaMax / 2))
+        {
+            if (m_char.IsBlocking)
+                m_char.Unblock();
+        }
         
-        if (DistanceToPlayer < 5.0f && PlayerIsInLineOfSight())
+        if (DistanceToPlayer < 4.0f && PlayerIsInLineOfSight())
         {
             if (m_canPunch)
             {
@@ -78,6 +87,7 @@ public class EnemyBrain : MonoBehaviour
 
     private void HandleOnHit()
     {
+        m_timeSinceLastAttack = 0;
         m_char.Block();
     }
 
