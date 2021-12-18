@@ -191,7 +191,7 @@ public class Fist : MonoBehaviour
     {
         if (m_debug)
         {
-            Debug2.DrawCross(m_currentTargetPositionL, Color.green);
+            Debug2.DrawCross(transform.TransformPoint(m_currentTargetPositionL), Color.green);
         }
     }
 }
