@@ -18,7 +18,16 @@ public class PlaytimeIndicator : UIIndicator
 
     protected override string GetTextFormat() {
         string original = m_level.ElapsedTimeSeconds.ToString();
-        int substringEnd = Mathf.Min(original.IndexOf(".") + 3, original.Length - 1);
-        return original.Substring(0, substringEnd) + " seconds";
+
+        var dotIndex = original.IndexOf(".");
+
+        if (dotIndex == -1)
+        {
+            return $"{original}.00 seconds";
+        }
+
+        int substringEnd = Mathf.Min(dotIndex + 3, original.Length - 1);
+
+        return $"{original.Substring(0, substringEnd)} seconds";
     }
 }
