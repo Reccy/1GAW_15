@@ -12,6 +12,10 @@ public class Character : MonoBehaviour
     [SerializeField] private MMFeedbacks m_onDieFeedbacks;
     [SerializeField] private MMFeedbacks m_outOfStaminaFeedbacks;
     [SerializeField] private MMFeedbacks m_onFinalDieFeedbacks;
+    [SerializeField] private MMFeedbacks m_onStartBlockFeedbacks;
+    [SerializeField] private MMFeedbacks m_onFinishBlockFeedbacks;
+    [SerializeField] private MMFeedbacks m_onShieldHitFeedbacks;
+    [SerializeField] private MMFeedbacks m_onBreakBlockFeedbacks;
 
     [Header("Character Stats")]
     [SerializeField] private int m_hpMax = 10;
@@ -36,7 +40,7 @@ public class Character : MonoBehaviour
 
     [Header("Movement Tuning")]
     [SerializeField] private float m_movementMult = 3.0f;
-    [SerializeField, Range(0.0f, 1.0f)] private float m_attackMovementPercent = 0.6f;
+    [SerializeField, Range(0.0f, 1.0f)] private float m_movementPenaltyPercent = 0.3f;
 
     [SerializeField] private Fist m_leftFist;
     [SerializeField] private Fist m_rightFist;
@@ -45,12 +49,17 @@ public class Character : MonoBehaviour
     public Fist RightFist => m_rightFist;
 
     private bool IsAttacking => !m_leftFist.IsIdle || !m_rightFist.IsIdle;
+    private bool CanAttack => IsAlive && !m_isBlocking;
 
     private Rigidbody2D m_rb;
 
     [Header("Combat Settings")]
     [SerializeField] private float m_hitbackTime = 0.2f;
+    [SerializeField] private int m_blockHitPenalty = 1;
     private Cooldown m_hitbackCooldown;
+    private bool m_isBlocking = false;
+
+    public bool IsBlocking => m_isBlocking;
 
     [Header("Death Settings")]
     [SerializeField] private float m_deathTime = 2.0f;
@@ -92,8 +101,6 @@ public class Character : MonoBehaviour
 
     private void HandleOnHit(Hitbox hitbox)
     {
-        m_onHitFeedbacks.PlayFeedbacks(); // TODO: Remaining HP Feedbacks
-
         var force = (transform.position - hitbox.transform.position).normalized * hitbox.AttackForce;
 
         // Do Hitback
@@ -101,8 +108,20 @@ public class Character : MonoBehaviour
         m_rb.AddForce(force, ForceMode2D.Impulse);
         m_hitbackCooldown.Begin();
 
-        // TODO: Update HP system to actually have variable damage
+        if (IsBlocking)
+        {
+            m_onShieldHitFeedbacks.PlayFeedbacks();
+            TakeStaminaDamage();
+        }
+        else
+        {
+            m_onHitFeedbacks.PlayFeedbacks();
+            TakeHealthDamage();
+        }
+    }
 
+    private void TakeHealthDamage()
+    {
         if (m_infiniteHp)
             return;
 
@@ -113,8 +132,23 @@ public class Character : MonoBehaviour
             Die();
     }
 
+    private void TakeStaminaDamage()
+    {
+        if (m_infiniteStam)
+            return;
+
+        if (m_staminaCurrent > 0)
+            m_staminaCurrent--;
+
+        if (m_staminaCurrent <= 0 && IsAlive)
+        {
+            BreakShield();
+        }
+    }
+
     private void Die()
     {
+        m_rb.velocity *= 3; // Multiply attack feedback to emphasize character death
         m_onDieFeedbacks.PlayFeedbacks();
         m_isAlive = false;
         m_deathCooldown.Begin();
@@ -134,8 +168,8 @@ public class Character : MonoBehaviour
 
         float movementPercent = 1.0f;
 
-        if (IsAttacking || HasNoStamina)
-            movementPercent = m_attackMovementPercent;
+        if (IsAttacking || HasNoStamina || IsBlocking)
+            movementPercent = m_movementPenaltyPercent;
 
         m_rb.AddForce(movement * m_movementMult * movementPercent, ForceMode2D.Impulse);
     }
@@ -152,7 +186,7 @@ public class Character : MonoBehaviour
 
     public void WindUpLeftStrike()
     {
-        if (IsDead)
+        if (!CanAttack)
             return;
 
         if (CheckStaminaAndRunFeedbacks())
@@ -163,7 +197,7 @@ public class Character : MonoBehaviour
 
     public void WindUpRightStrike()
     {
-        if (IsDead)
+        if (!CanAttack)
             return;
 
         if (CheckStaminaAndRunFeedbacks())
@@ -174,7 +208,7 @@ public class Character : MonoBehaviour
 
     public void ReleaseLeftStrike()
     {
-        if (IsDead)
+        if (!CanAttack)
             return;
 
         if (CheckStaminaAndRunFeedbacks())
@@ -185,13 +219,45 @@ public class Character : MonoBehaviour
 
     public void ReleaseRightStrike()
     {
-        if (IsDead)
+        if (!CanAttack)
             return;
 
         if (CheckStaminaAndRunFeedbacks())
             return;
 
         m_rightFist.Strike();
+    }
+
+    public void Block()
+    {
+        if (IsDead)
+            return;
+
+        if (CheckStaminaAndRunFeedbacks())
+            return;
+
+        if (!m_isBlocking)
+            BeginBlocking();
+
+        m_isBlocking = true;
+    }
+
+    public void Unblock()
+    {
+        if (IsDead)
+            return;
+
+        if (m_isBlocking)
+            BeginUnblocking();
+
+        m_isBlocking = false;
+    }
+
+    private void BreakShield()
+    {
+        m_isBlocking = false;
+
+        m_onBreakBlockFeedbacks.PlayFeedbacks();
     }
 
     private bool CheckStaminaAndRunFeedbacks()
@@ -203,5 +269,15 @@ public class Character : MonoBehaviour
             m_outOfStaminaFeedbacks.PlayFeedbacks();
 
         return true;
+    }
+
+    private void BeginBlocking()
+    {
+        m_onStartBlockFeedbacks.PlayFeedbacks();
+    }
+
+    private void BeginUnblocking()
+    {
+        m_onFinishBlockFeedbacks.PlayFeedbacks();
     }
 }

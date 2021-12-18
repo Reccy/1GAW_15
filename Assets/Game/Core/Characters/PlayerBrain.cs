@@ -23,7 +23,7 @@ public class PlayerBrain : MonoBehaviour
     #region INPUT
     private const string BTN_LEFT_STRIKE = "LeftStrike";
     private const string BTN_RIGHT_STRIKE = "RightStrike";
-    private const string BTN_DASH = "Dash";
+    private const string BTN_BLOCK = "Block";
 
     private bool m_inputLeftStrike = false;
     private bool m_inputLeftStrikeReleased = false;
@@ -31,7 +31,8 @@ public class PlayerBrain : MonoBehaviour
     private bool m_inputRightStrike = false;
     private bool m_inputRightStrikeReleased = false;
     
-    private bool m_inputDash = false;
+    private bool m_inputBlock = false;
+    private bool m_inputBlockReleased = false;
     #endregion
 
     private void Awake()
@@ -52,6 +53,18 @@ public class PlayerBrain : MonoBehaviour
 
         var lookTarget = CalculateLookTarget();
         m_char.LookAt(lookTarget, -90);
+
+        if (m_inputBlock)
+        {
+            m_char.Block();
+            m_inputBlock = false;
+        }
+
+        if (m_inputBlockReleased)
+        {
+            m_char.Unblock();
+            m_inputBlockReleased = false;
+        }
 
         // Wind up
         if (m_inputLeftStrike)
@@ -94,8 +107,11 @@ public class PlayerBrain : MonoBehaviour
         if (!m_inputRightStrikeReleased)
             m_inputRightStrikeReleased = m_rp.GetButtonUp(BTN_RIGHT_STRIKE);
 
-        if (!m_inputDash)
-            m_inputDash = m_rp.GetButtonDown(BTN_DASH);
+        if (!m_inputBlock)
+            m_inputBlock = m_rp.GetButtonDown(BTN_BLOCK);
+
+        if (!m_inputBlockReleased)
+            m_inputBlockReleased = m_rp.GetButtonUp(BTN_BLOCK);
     }
 
     private void HandleOnAttackLanded()

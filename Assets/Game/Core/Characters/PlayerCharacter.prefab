@@ -112,7 +112,7 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  FreezeFrameDuration: 0.02
+  FreezeFrameDuration: 0.025
   MinimumTimescaleThreshold: 0.1
 --- !u!1 &5451386642312040759
 GameObject:
@@ -183,17 +183,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2829769742800874185}
     m_Modifications:
+    - target: {fileID: 407572919406869268, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 507056376242645119, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_debug
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792085484857961846, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4858498413608931441, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_debug
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4946883325341702798, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570694000513756003, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6783863905257207073, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8647563655986435169, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_RootOrder
