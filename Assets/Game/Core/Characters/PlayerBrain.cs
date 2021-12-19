@@ -33,6 +33,7 @@ public class PlayerBrain : MonoBehaviour
     private const string BTN_LEFT_STRIKE = "LeftStrike";
     private const string BTN_RIGHT_STRIKE = "RightStrike";
     private const string BTN_BLOCK = "Block";
+    private const string BTN_WALK = "Walk";
 
     private bool m_inputLeftStrike = false;
     private bool m_inputLeftStrikeReleased = false;
@@ -42,6 +43,9 @@ public class PlayerBrain : MonoBehaviour
     
     private bool m_inputBlock = false;
     private bool m_inputBlockReleased = false;
+
+    private bool m_inputWalk = false;
+    private bool m_inputWalkReleased = false;
     #endregion
 
     private void Awake()
@@ -72,6 +76,18 @@ public class PlayerBrain : MonoBehaviour
         {
             Character.Unblock();
             m_inputBlockReleased = false;
+        }
+
+        if (m_inputWalk)
+        {
+            Character.ToggleWalk(true);
+            m_inputWalk = false;
+        }
+
+        if (m_inputWalkReleased)
+        {
+            Character.ToggleWalk(false);
+            m_inputWalkReleased = false;
         }
 
         // Wind up
@@ -120,6 +136,12 @@ public class PlayerBrain : MonoBehaviour
 
         if (!m_inputBlockReleased)
             m_inputBlockReleased = m_rp.GetButtonUp(BTN_BLOCK);
+
+        if (!m_inputWalk)
+            m_inputWalk = m_rp.GetButtonDown(BTN_WALK);
+
+        if (!m_inputWalkReleased)
+            m_inputWalkReleased = m_rp.GetButtonUp(BTN_WALK);
     }
 
     private void HandleOnAttackLanded()

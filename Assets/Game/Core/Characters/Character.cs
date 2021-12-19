@@ -51,6 +51,9 @@ public class Character : MonoBehaviour
     private bool IsAttacking => !m_leftFist.IsIdle || !m_rightFist.IsIdle;
     private bool CanAttack => IsAlive && !m_isBlocking;
 
+    private bool m_isWalking = false;
+    private bool IsWalking => m_isWalking;
+
     private Rigidbody2D m_rb;
 
     [Header("Combat Settings")]
@@ -107,11 +110,21 @@ public class Character : MonoBehaviour
         m_deathCooldown.Tick(Time.deltaTime);
         m_staminaCheckCooldown.Tick(Time.deltaTime);
 
+        // Walking regens stamina more quickly
+        if (IsWalking)
+            m_staminaCheckCooldown.Tick(Time.deltaTime);
+
         if (m_isBlocking)
             m_staminaCheckCooldown.Begin();
 
         if (m_isRegenningStamina)
+        {
             m_staminaRegenCooldown.Tick(Time.deltaTime);
+
+            // Walking regens stamina more quickly
+            if (IsWalking)
+                m_staminaRegenCooldown.Tick(Time.deltaTime);
+        }
     }
 
     private void BeginStaminaRegen()
@@ -217,7 +230,7 @@ public class Character : MonoBehaviour
 
         float movementPercent = 1.0f;
 
-        if (IsAttacking || HasNoStamina || IsBlocking)
+        if (IsAttacking || HasNoStamina || IsBlocking || IsWalking)
             movementPercent = m_movementPenaltyPercent;
 
         m_rb.AddForce(movement * m_movementMult * movementPercent, ForceMode2D.Impulse);
@@ -300,6 +313,11 @@ public class Character : MonoBehaviour
             BeginUnblocking();
 
         m_isBlocking = false;
+    }
+
+    public void ToggleWalk(bool enabled)
+    {
+        m_isWalking = enabled;
     }
 
     private void BreakShield()

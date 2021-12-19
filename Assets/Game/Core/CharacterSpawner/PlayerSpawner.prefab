@@ -3979,7 +3979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5702867754767148217, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
       propertyPath: m_staminaMax
-      value: 100
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 5702867754767148217, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
       propertyPath: m_staminaRegenDelay
