@@ -57,7 +57,7 @@ public class EnemyBrain : MonoBehaviour
         }
 
         // Run away when out of stamina!
-        if (m_char.HasNoStamina)
+        if (m_char.HasNoStamina || m_char.IsBlocking)
             move = -move;
 
         // Punch Player

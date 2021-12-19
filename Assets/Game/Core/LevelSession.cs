@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
+using UnityEngine.SceneManagement;
 
 public class LevelSession : MonoBehaviour
 {
+    private const int PLAYER_ID = 0;
+    private Player m_rp;
+    private const string BTN_RESET_GAME = "ResetGame";
+
     [SerializeField] private GameObject m_canvas;
     public GameObject Canvas => m_canvas;
+
+    [SerializeField] private GameObject m_endGameScreen;
 
     [SerializeField] private GameObject m_enemySpawnerPrefab;
 
@@ -66,12 +74,20 @@ public class LevelSession : MonoBehaviour
     private void Awake()
     {
         m_canvas.SetActive(false);
+
+        m_rp = ReInput.players.GetPlayer(PLAYER_ID);
     }
 
     private void Update()
     {
         if (m_elapseTime)
             m_elapsedTimeSeconds += Time.deltaTime;
+
+        // Reload Scene
+        if (m_rp.GetButtonDown(BTN_RESET_GAME) && m_state == State.END_GAME)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void FixedUpdate()
@@ -96,6 +112,19 @@ public class LevelSession : MonoBehaviour
                 m_state = State.BETWEEN_FIGHT;
                 m_didSpawn = false;
             }
+        }
+
+        if (m_state != State.END_GAME && m_state != State.PRE_GAME)
+        {
+            if (!PlayerCharacter.IsAlive)
+            {
+                m_state = State.END_GAME;
+            }
+        }
+
+        if (m_state == State.END_GAME)
+        {
+            m_endGameScreen.SetActive(true);
         }
     }
 
