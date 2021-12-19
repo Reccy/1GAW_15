@@ -10,7 +10,15 @@ public class PlayerBrain : MonoBehaviour
     private const int PLAYER_ID = 0;
     private Player m_rp;
     private Character m_char;
-    public Character Character => m_char;
+    public Character Character {
+        get
+        {
+            if (m_char == null)
+                m_char = GetComponentInChildren<Character>();
+
+            return m_char;
+        }
+    }
 
     private MouseCursorWorldPosition m_cursorPositionW;
 
@@ -39,57 +47,56 @@ public class PlayerBrain : MonoBehaviour
     private void Awake()
     {
         m_rp = ReInput.players.GetPlayer(PLAYER_ID);
-        m_char = GetComponentInChildren<Character>();
         m_cursorPositionW = FindObjectOfType<MouseCursorWorldPosition>();
 
-        m_char.LeftFist.OnStrikeLanded += HandleOnAttackLanded;
-        m_char.RightFist.OnStrikeLanded += HandleOnAttackLanded;
+        Character.LeftFist.OnStrikeLanded += HandleOnAttackLanded;
+        Character.RightFist.OnStrikeLanded += HandleOnAttackLanded;
     }
 
     private void FixedUpdate()
     {
         Vector3 move = m_rp.GetAxis2D("MoveHorizontal", "MoveVertical");
 
-        m_char.Move(move);
+        Character.Move(move);
 
         var lookTarget = CalculateLookTarget();
-        m_char.LookAt(lookTarget, -90);
+        Character.LookAt(lookTarget, -90);
 
         if (m_inputBlock)
         {
-            m_char.Block();
+            Character.Block();
             m_inputBlock = false;
         }
 
         if (m_inputBlockReleased)
         {
-            m_char.Unblock();
+            Character.Unblock();
             m_inputBlockReleased = false;
         }
 
         // Wind up
         if (m_inputLeftStrike)
         {
-            m_char.WindUpLeftStrike();
+            Character.WindUpLeftStrike();
             m_inputLeftStrike = false;
         }
 
         if (m_inputRightStrike)
         {
-            m_char.WindUpRightStrike();
+            Character.WindUpRightStrike();
             m_inputRightStrike = false;
         }
 
         // Release
         if (m_inputLeftStrikeReleased)
         {
-            m_char.ReleaseLeftStrike();
+            Character.ReleaseLeftStrike();
             m_inputLeftStrikeReleased = false;
         }
 
         if (m_inputRightStrikeReleased)
         {
-            m_char.ReleaseRightStrike();
+            Character.ReleaseRightStrike();
             m_inputRightStrikeReleased = false;
         }
     }

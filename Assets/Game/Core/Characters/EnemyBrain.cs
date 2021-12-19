@@ -8,7 +8,6 @@ public class EnemyBrain : MonoBehaviour
     private Character m_char;
     private Character m_playerCharacter;
 
-    [SerializeField] private float m_inRangeAmount = 5.0f;
     [SerializeField] private Rigidbody2DFinder m_ffZone;
 
     private bool m_punchLeft = false;
