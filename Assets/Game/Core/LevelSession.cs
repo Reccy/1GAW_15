@@ -60,16 +60,19 @@ public class LevelSession : MonoBehaviour
         m_kills++;
     }
 
-    private Character m_playerCharacter;
-    public Character PlayerCharacter {
+    private PlayerBrain m_playerBrain;
+    public PlayerBrain PlayerBrain
+    {
         get
         {
-            if (m_playerCharacter == null)
-                m_playerCharacter = FindObjectOfType<PlayerBrain>().Character;
+            if (m_playerBrain == null)
+                m_playerBrain = FindObjectOfType<PlayerBrain>();
 
-            return m_playerCharacter;
+            return m_playerBrain;
         }
     }
+
+    public Character PlayerCharacter => PlayerBrain.Character;
 
     private void Awake()
     {
@@ -96,6 +99,7 @@ public class LevelSession : MonoBehaviour
         {
             if (!m_didSpawn)
             {
+                HealPlayer();
                 SpawnNewWave();
                 m_didSpawn = true;
             }
@@ -151,5 +155,10 @@ public class LevelSession : MonoBehaviour
         float y = Random.Range(m_spawnArea.bounds.min.y, m_spawnArea.bounds.max.y);
 
         return new Vector2(x, y) + (Vector2)m_spawnArea.bounds.center;
+    }
+
+    private void HealPlayer()
+    {
+        PlayerBrain.GainHP();
     }
 }

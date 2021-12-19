@@ -48,7 +48,7 @@ MonoBehaviour:
   Feedbacks:
   - {fileID: 201532594638298789}
   - {fileID: 7777939152517680096}
-  InitializationMode: 2
+  InitializationMode: 1
   SafeMode: 3
   Direction: 0
   AutoChangeDirectionOnEnd: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Feedbacks: []
-  InitializationMode: 2
+  InitializationMode: 1
   SafeMode: 3
   Direction: 0
   AutoChangeDirectionOnEnd: 0
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Feedbacks:
   - {fileID: 1392975486942892917}
-  InitializationMode: 2
+  InitializationMode: 1
   SafeMode: 3
   Direction: 0
   AutoChangeDirectionOnEnd: 0
@@ -547,7 +547,7 @@ MonoBehaviour:
   Feedbacks:
   - {fileID: 104515304683022895}
   - {fileID: 5404277131777001634}
-  InitializationMode: 2
+  InitializationMode: 1
   SafeMode: 3
   Direction: 0
   AutoChangeDirectionOnEnd: 0
@@ -785,7 +785,7 @@ MonoBehaviour:
   - {fileID: 5921243566224625102}
   - {fileID: 5716297798246572491}
   - {fileID: 6647185324257370440}
-  InitializationMode: 2
+  InitializationMode: 1
   SafeMode: 3
   Direction: 0
   AutoChangeDirectionOnEnd: 0

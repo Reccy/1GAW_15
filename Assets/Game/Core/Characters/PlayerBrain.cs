@@ -24,6 +24,7 @@ public class PlayerBrain : MonoBehaviour
 
     [Header("Feedbacks")]
     [SerializeField] private MMFeedbacks m_attackLandedFeedbacks;
+    [SerializeField] private MMFeedbacks m_hpRegenFeedbacks;
 
     [Header("Lockon")]
     [SerializeField] private Rigidbody2DFinder m_lockonFinder;
@@ -164,5 +165,12 @@ public class PlayerBrain : MonoBehaviour
             return m_cursorPositionW.transform.position;
 
         return character.transform.position;
+    }
+
+    public void GainHP()
+    {
+        int hp = 20;
+        m_hpRegenFeedbacks.PlayFeedbacks(transform.position, feedbacksIntensity: hp);
+        m_char.Heal(hp);
     }
 }

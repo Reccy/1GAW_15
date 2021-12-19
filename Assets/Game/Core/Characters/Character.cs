@@ -198,6 +198,16 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void Heal(int hp)
+    {
+        if (m_infiniteHp)
+            return;
+
+        m_hpCurrent += hp;
+
+        m_hpCurrent = Mathf.Min(m_hpMax, m_hpCurrent);
+    }
+
     private void HandleStaminaRegen()
     {
         m_staminaCurrent = Mathf.Min(m_staminaCurrent + 1, m_staminaMax);
