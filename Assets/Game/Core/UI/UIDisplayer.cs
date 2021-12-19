@@ -8,6 +8,6 @@ public class UIDisplayer : MonoBehaviour
     {
         var ls = FindObjectOfType<LevelSession>();
         ls.Canvas.SetActive(true);
-        ls.BeginTimer();
+        ls.StartGame();
     }
 }

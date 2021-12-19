@@ -74,6 +74,9 @@ public class Character : MonoBehaviour
     public delegate void OnHitEvent();
     public OnHitEvent OnHit;
 
+    public delegate void OnDiedEvent();
+    public OnDiedEvent OnDied;
+
     private void Awake()
     {
         m_hurtbox.OnHit += HandleOnHit;
@@ -196,6 +199,8 @@ public class Character : MonoBehaviour
         m_onDieFeedbacks.PlayFeedbacks();
         m_isAlive = false;
         m_deathCooldown.Begin();
+
+        OnDied?.Invoke();
     }
 
     private void HandleDeathComplete()

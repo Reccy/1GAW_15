@@ -16,6 +16,8 @@ public class EnemyBrain : MonoBehaviour
 
     private float m_timeSinceLastAttack = 0;
 
+    private LevelSession m_levelSession;
+
     private void Awake()
     {
         m_char = GetComponentInChildren<Character>();
@@ -30,6 +32,10 @@ public class EnemyBrain : MonoBehaviour
         m_punchCooldown.OnCooldownComplete = () => { m_canPunch = true; };
 
         m_playerCharacter = FindObjectOfType<PlayerBrain>().Character;
+
+        m_levelSession = FindObjectOfType<LevelSession>();
+        m_levelSession.NotifyEnemySpawned();
+        m_char.OnDied += () => { m_levelSession.NotifyEnemyKilled(); };
     }
 
     private void FixedUpdate()
@@ -43,12 +49,18 @@ public class EnemyBrain : MonoBehaviour
 
         var move = m_playerCharacter.transform.position - m_char.transform.position;
 
+        // Unblock when close and has stamina
         if (m_timeSinceLastAttack > 5.0f && m_char.StaminaCurrent >= (m_char.StaminaMax / 2))
         {
             if (m_char.IsBlocking)
                 m_char.Unblock();
         }
-        
+
+        // Run away when out of stamina!
+        if (m_char.HasNoStamina)
+            move = -move;
+
+        // Punch Player
         if (DistanceToPlayer < 4.0f && PlayerIsInLineOfSight())
         {
             if (m_canPunch)
@@ -72,7 +84,8 @@ public class EnemyBrain : MonoBehaviour
             }
         }
 
-        if (DistanceToPlayer > 20.0f)
+        // Unblock when far away
+        if (DistanceToPlayer > 15.0f)
         {
             if (m_char.IsBlocking)
                 m_char.Unblock();
