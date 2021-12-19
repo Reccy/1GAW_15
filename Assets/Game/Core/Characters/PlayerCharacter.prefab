@@ -191,6 +191,10 @@ PrefabInstance:
       propertyPath: m_debug
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2333882200079891168, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
+      propertyPath: m_staminaMax
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2792085484857961846, guid: 9caf50ab9d185cd43bc7fd6edc1cbc25, type: 3}
       propertyPath: m_RootOrder
       value: 8

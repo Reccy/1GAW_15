@@ -3973,6 +3973,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 5702867754767148217, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: m_hpMax
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702867754767148217, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: m_staminaMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702867754767148217, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
+      propertyPath: m_staminaRegenDelay
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f70c01b957429a468c76bebb13e96d7, type: 3}
 --- !u!1 &524518870707992843 stripped
