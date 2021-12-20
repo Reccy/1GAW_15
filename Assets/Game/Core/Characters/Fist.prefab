@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7802156681365377702}
   - component: {fileID: 3121992217157176260}
   - component: {fileID: 201532594638298789}
-  - component: {fileID: 7777939152517680096}
+  - component: {fileID: 5131427704103969283}
   m_Layer: 0
   m_Name: StrikeFeedbacks
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Feedbacks:
   - {fileID: 201532594638298789}
-  - {fileID: 7777939152517680096}
+  - {fileID: 5131427704103969283}
   InitializationMode: 1
   SafeMode: 3
   Direction: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   MinPitch: 0.99
   MaxPitch: 1.05
   SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &7777939152517680096
+--- !u!114 &5131427704103969283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,11 +136,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1411678967592419941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5c591a2f3dd65344a900176f88dd392, type: 3}
+  m_Script: {fileID: 11500000, guid: 23a102c1a91e34644aa37f1e4f00c31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: EnableFistFX
+  Label: Enable Fist FX
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -162,81 +162,30 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Target:
-    TargetObject: {fileID: 8829315255342376802}
-    TargetComponent: {fileID: 6189625706832064416}
-    TargetScriptableObject: {fileID: 0}
-    TargetPropertyName: emitting
-    ShouldModifyValue: 1
-    RelativeValue: 1
-    ModifyX: 1
-    ModifyY: 1
-    ModifyZ: 1
-    ModifyW: 1
-    Threshold: 0.5
-    BoolRemapZero: 0
-    BoolRemapOne: 1
-    StringRemapZero: Zero
-    StringRemapOne: One
-    IntRemapZero: 0
-    IntRemapOne: 1
-    FloatRemapZero: 0
-    FloatRemapOne: 1
-    Vector2RemapZero: {x: 0, y: 0}
-    Vector2RemapOne: {x: 1, y: 1}
-    Vector3RemapZero: {x: 0, y: 0, z: 0}
-    Vector3RemapOne: {x: 1, y: 1, z: 1}
-    Vector4RemapZero: {x: 0, y: 0, z: 0, w: 0}
-    Vector4RemapOne: {x: 1, y: 1, z: 1, w: 1}
-    QuaternionRemapZero: {x: 0, y: 0, z: 0}
-    QuaternionRemapOne: {x: 180, y: 180, z: 180}
-    ColorRemapZero: {r: 1, g: 1, b: 1, a: 1}
-    ColorRemapOne: {r: 0, g: 0, b: 0, a: 1}
-    Level: 0
-  Mode: 1
-  Duration: 0.2
-  StartsOff: 0
-  RelativeValues: 0
-  AllowAdditivePlays: 0
-  LevelCurve:
-    MMTweenDefinitionType: 1
-    MMTweenCurve: 4
-    Curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.3
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  RemapLevelZero: 0
-  RemapLevelOne: 1
-  InstantLevel: 1
+  PlayEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6189625706832064416}
+        m_TargetAssemblyTypeName: UnityEngine.TrailRenderer, UnityEngine
+        m_MethodName: set_emitting
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  StopEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  InitializationEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  ResetEvents:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2755182905666277756
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +459,7 @@ GameObject:
   - component: {fileID: 1397030414176574487}
   - component: {fileID: 4954698619687604950}
   - component: {fileID: 104515304683022895}
-  - component: {fileID: 5404277131777001634}
+  - component: {fileID: 4881175941773455078}
   m_Layer: 0
   m_Name: MissFeedbacks
   m_TagString: Untagged
@@ -546,7 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Feedbacks:
   - {fileID: 104515304683022895}
-  - {fileID: 5404277131777001634}
+  - {fileID: 4881175941773455078}
   InitializationMode: 1
   SafeMode: 3
   Direction: 0
@@ -625,7 +574,7 @@ MonoBehaviour:
   MinPitch: 0.95
   MaxPitch: 1.1
   SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &5404277131777001634
+--- !u!114 &4881175941773455078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -634,11 +583,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4106899224595246820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5c591a2f3dd65344a900176f88dd392, type: 3}
+  m_Script: {fileID: 11500000, guid: 23a102c1a91e34644aa37f1e4f00c31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Label: DisableFistFX
+  Label: Disable Fist FX
   Chance: 100
   Timing:
     TimescaleMode: 0
@@ -660,81 +609,30 @@ MonoBehaviour:
     Quantized: 0
     TargetBPM: 120
   DebugActive: 0
-  Target:
-    TargetObject: {fileID: 8829315255342376802}
-    TargetComponent: {fileID: 6189625706832064416}
-    TargetScriptableObject: {fileID: 0}
-    TargetPropertyName: emitting
-    ShouldModifyValue: 1
-    RelativeValue: 1
-    ModifyX: 1
-    ModifyY: 1
-    ModifyZ: 1
-    ModifyW: 1
-    Threshold: 0.5
-    BoolRemapZero: 0
-    BoolRemapOne: 1
-    StringRemapZero: Zero
-    StringRemapOne: One
-    IntRemapZero: 0
-    IntRemapOne: 1
-    FloatRemapZero: 0
-    FloatRemapOne: 1
-    Vector2RemapZero: {x: 0, y: 0}
-    Vector2RemapOne: {x: 1, y: 1}
-    Vector3RemapZero: {x: 0, y: 0, z: 0}
-    Vector3RemapOne: {x: 1, y: 1, z: 1}
-    Vector4RemapZero: {x: 0, y: 0, z: 0, w: 0}
-    Vector4RemapOne: {x: 1, y: 1, z: 1, w: 1}
-    QuaternionRemapZero: {x: 0, y: 0, z: 0}
-    QuaternionRemapOne: {x: 180, y: 180, z: 180}
-    ColorRemapZero: {r: 1, g: 1, b: 1, a: 1}
-    ColorRemapOne: {r: 0, g: 0, b: 0, a: 1}
-    Level: 0
-  Mode: 1
-  Duration: 0.2
-  StartsOff: 0
-  RelativeValues: 0
-  AllowAdditivePlays: 0
-  LevelCurve:
-    MMTweenDefinitionType: 1
-    MMTweenCurve: 4
-    Curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.3
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  RemapLevelZero: 0
-  RemapLevelOne: 1
-  InstantLevel: 0
+  PlayEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6189625706832064416}
+        m_TargetAssemblyTypeName: UnityEngine.TrailRenderer, UnityEngine
+        m_MethodName: set_emitting
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  StopEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  InitializationEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  ResetEvents:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4435311764605316601
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,8 +644,8 @@ GameObject:
   - component: {fileID: 4816239946117412099}
   - component: {fileID: 8331743012285231432}
   - component: {fileID: 5921243566224625102}
-  - component: {fileID: 5716297798246572491}
   - component: {fileID: 6647185324257370440}
+  - component: {fileID: 3659431030408720144}
   m_Layer: 0
   m_Name: StrikeLandedFeedbacks
   m_TagString: Untagged
@@ -783,8 +681,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Feedbacks:
   - {fileID: 5921243566224625102}
-  - {fileID: 5716297798246572491}
   - {fileID: 6647185324257370440}
+  - {fileID: 3659431030408720144}
   InitializationMode: 1
   SafeMode: 3
   Direction: 0
@@ -865,116 +763,6 @@ MonoBehaviour:
   MinPitch: 0.95
   MaxPitch: 1.05
   SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &5716297798246572491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4435311764605316601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5c591a2f3dd65344a900176f88dd392, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 1
-  Label: DisableFistFX
-  Chance: 100
-  Timing:
-    TimescaleMode: 0
-    InitialDelay: 0
-    CooldownDuration: 0
-    ExcludeFromHoldingPauses: 0
-    InterruptsOnStop: 1
-    NumberOfRepeats: 0
-    RepeatForever: 0
-    DelayBetweenRepeats: 1
-    MMFeedbacksDirectionCondition: 0
-    PlayDirection: 0
-    ConstantIntensity: 0
-    UseIntensityInterval: 0
-    IntensityIntervalMin: 0
-    IntensityIntervalMax: 0
-    Sequence: {fileID: 0}
-    TrackID: 0
-    Quantized: 0
-    TargetBPM: 120
-  DebugActive: 0
-  Target:
-    TargetObject: {fileID: 8829315255342376802}
-    TargetComponent: {fileID: 6189625706832064416}
-    TargetScriptableObject: {fileID: 0}
-    TargetPropertyName: emitting
-    ShouldModifyValue: 1
-    RelativeValue: 1
-    ModifyX: 1
-    ModifyY: 1
-    ModifyZ: 1
-    ModifyW: 1
-    Threshold: 0.5
-    BoolRemapZero: 0
-    BoolRemapOne: 1
-    StringRemapZero: Zero
-    StringRemapOne: One
-    IntRemapZero: 0
-    IntRemapOne: 1
-    FloatRemapZero: 0
-    FloatRemapOne: 1
-    Vector2RemapZero: {x: 0, y: 0}
-    Vector2RemapOne: {x: 1, y: 1}
-    Vector3RemapZero: {x: 0, y: 0, z: 0}
-    Vector3RemapOne: {x: 1, y: 1, z: 1}
-    Vector4RemapZero: {x: 0, y: 0, z: 0, w: 0}
-    Vector4RemapOne: {x: 1, y: 1, z: 1, w: 1}
-    QuaternionRemapZero: {x: 0, y: 0, z: 0}
-    QuaternionRemapOne: {x: 180, y: 180, z: 180}
-    ColorRemapZero: {r: 1, g: 1, b: 1, a: 1}
-    ColorRemapOne: {r: 0, g: 0, b: 0, a: 1}
-    Level: 0
-  Mode: 1
-  Duration: 0.2
-  StartsOff: 0
-  RelativeValues: 0
-  AllowAdditivePlays: 0
-  LevelCurve:
-    MMTweenDefinitionType: 1
-    MMTweenCurve: 4
-    Curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.3
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  RemapLevelZero: 0
-  RemapLevelOne: 1
-  InstantLevel: 0
 --- !u!114 &6647185324257370440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,6 +809,65 @@ MonoBehaviour:
   NestParticles: 0
   ApplyRotation: 0
   ApplyScale: 0
+--- !u!114 &3659431030408720144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435311764605316601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a102c1a91e34644aa37f1e4f00c31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Disable Fist FX
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  PlayEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6189625706832064416}
+        m_TargetAssemblyTypeName: UnityEngine.TrailRenderer, UnityEngine
+        m_MethodName: set_emitting
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  StopEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  InitializationEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  ResetEvents:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7986690098061810966
 GameObject:
   m_ObjectHideFlags: 0

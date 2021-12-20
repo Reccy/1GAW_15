@@ -99,7 +99,11 @@ public class LevelSession : MonoBehaviour
         {
             if (!m_didSpawn)
             {
-                HealPlayer();
+                if (m_levelStage >= 1)
+                {
+                    HealPlayer();
+                }
+
                 SpawnNewWave();
                 m_didSpawn = true;
             }

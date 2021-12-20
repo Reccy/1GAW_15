@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Game01
+  m_Shaders:
+  - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS UNITY_HDR_ON _SUNDISK_SIMPLE
+        passType: 0
+  - first: {fileID: 207, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS UNITY_HDR_ON
+        passType: 0
+  - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9001, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9002, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9003, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9004, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9007, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9101, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9103, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS UNITY_HDR_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 5c4aad560e4da4a59aa10f6f2f6e84ce, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+  - first: {fileID: 4800000, guid: 616a25aec4b286744b9fa8a7c081c531, type: 3}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS INSTANCING_ON UNITY_HDR_ON
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS INSTANCING_ON UNITY_HDR_ON VERTEXLIGHT_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 52908bebb4ec95240bedf3b094f65889, type: 3}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS INSTANCING_ON UNITY_HDR_ON
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS INSTANCING_ON UNITY_HDR_ON VERTEXLIGHT_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 0736a017ee88a8741b09e7382339ab99, type: 3}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS INSTANCING_ON UNITY_HDR_ON
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS INSTANCING_ON UNITY_HDR_ON VERTEXLIGHT_ON
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS INNER_RADIUS INSTANCING_ON UNITY_HDR_ON
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS INNER_RADIUS INSTANCING_ON UNITY_HDR_ON
+          VERTEXLIGHT_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 08972cbecdebc6944b65c598dec5cb43, type: 3}
+    second:
+      variants:
+      - keywords: BILLBOARD_FACE_CAMERA_POS CAP_ROUND INSTANCING_ON UNITY_HDR_ON
+        passType: 0
+      - keywords: BILLBOARD_FACE_CAMERA_POS CAP_ROUND INSTANCING_ON UNITY_HDR_ON
+          VERTEXLIGHT_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: c15834894887d4c4b935cfe9df6f1c89, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 4
+      - keywords: 
+        passType: 5
+      - keywords: 
+        passType: 6
+      - keywords: 
+        passType: 7
+      - keywords: 
+        passType: 10
+      - keywords: 
+        passType: 11
+  - first: {fileID: 4800000, guid: 714e760b98304b44292e04841e05f258, type: 3}
+    second:
+      variants:
+      - keywords: _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON _FADING_ON
+          _SUBGLOW_ON __CFXRGLOW_POW_P0 __CFXRGLOW_POW_P6
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P0 __CFXRGLOW_POW_P6
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_GLOW_POW_P0 _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P4 __CFXRGLOW_POW_P6
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_HDR_BOOST _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P4 __CFXRGLOW_POW_P6
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_HDR_BOOST _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P0 __CFXRGLOW_POW_P6
+        passType: 4
+      - keywords: _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P0 __CFXRGLOW_POW_P6
+        passType: 8
+      - keywords: _CFXR_GLOW_POW_P0 _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P4 __CFXRGLOW_POW_P6
+        passType: 8
+      - keywords: _CFXR_HDR_BOOST _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P4 __CFXRGLOW_POW_P6
+        passType: 8
+      - keywords: _CFXR_HDR_BOOST _FADING_ON _SUBGLOW_ON __CFXRGLOW_POW_P0 __CFXRGLOW_POW_P6
+        passType: 8
+  - first: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
+    second:
+      variants:
+      - keywords: _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_DITHERED_SHADOWS_OFF _CFXR_HDR_BOOST _CFXR_OVERLAYBLEND_RGBA _CFXR_SINGLE_CHANNEL
+          _FADING_ON _OVERLAYTEX_OFF
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_DITHERED_SHADOWS_OFF _CFXR_EDGE_FADING _CFXR_HDR_BOOST _CFXR_OVERLAYBLEND_RGBA
+          _CFXR_SINGLE_CHANNEL _FADING_ON _OVERLAYTEX_OFF
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _ALPHABLEND_ON _CFXR_DITHERED_SHADOWS_OFF _CFXR_EDGE_FADING _CFXR_HDR_BOOST
+          _CFXR_OVERLAYBLEND_RGBA _CFXR_SINGLE_CHANNEL _CFXR_UV2_DISTORTION _CFXR_UV_DISTORTION
+          _CFXR_UV_DISTORTION_ADD _FADING_ON _OVERLAYTEX_OFF
+        passType: 4
+      - keywords: _CFXR_ADDITIVE _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON _CFXR_ADDITIVE
+          _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON _CFXR_ADDITIVE
+          _CFXR_DISSOLVE _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_ADDITIVE _CFXR_DISSOLVE _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON _CFXR_DITHERED_SHADOWS_ON
+          _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON _ALPHABLEND_ON
+          _CFXR_DISSOLVE _CFXR_DITHERED_SHADOWS_ON _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _ALPHABLEND_ON _CFXR_DISSOLVE _CFXR_DITHERED_SHADOWS_ON _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_ADDITIVE _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: _CFXR_DITHERED_SHADOWS_OFF _CFXR_HDR_BOOST _CFXR_OVERLAYBLEND_RGBA
+          _CFXR_SINGLE_CHANNEL _FADING_ON _OVERLAYTEX_OFF
+        passType: 8
+      - keywords: _CFXR_DITHERED_SHADOWS_OFF _CFXR_EDGE_FADING _CFXR_HDR_BOOST _CFXR_OVERLAYBLEND_RGBA
+          _CFXR_SINGLE_CHANNEL _FADING_ON _OVERLAYTEX_OFF
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DITHERED_SHADOWS_OFF _CFXR_EDGE_FADING _CFXR_HDR_BOOST
+          _CFXR_OVERLAYBLEND_RGBA _CFXR_SINGLE_CHANNEL _CFXR_UV2_DISTORTION _CFXR_UV_DISTORTION
+          _CFXR_UV_DISTORTION_ADD _FADING_ON _OVERLAYTEX_OFF
+        passType: 8
+      - keywords: _CFXR_ADDITIVE _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 8
+      - keywords: _CFXR_ADDITIVE _CFXR_DISSOLVE _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 8
+      - keywords: _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DISSOLVE _CFXR_DITHERED_SHADOWS_ON _FADING_ON
+        passType: 8
+      - keywords: _CFXR_ADDITIVE _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 8
+  - first: {fileID: 4800000, guid: 3dda44a7d9cec71439b5b8e20fcbccfb, type: 3}
+    second:
+      variants:
+      - keywords: _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: BILLBOARD_FACE_CAMERA_POS LIGHTPROBE_SH UNITY_HDR_ON VERTEXLIGHT_ON
+          _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 4
+      - keywords: _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 8
